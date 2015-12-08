@@ -1,10 +1,4 @@
-//
-//  forgotPasswordViewController.m
-//  HangmanPeerUp
-//
-//  Created by Krishna_Mac_4 on 19/11/15.
-//  Copyright © 2015 Apple, Inc. All rights reserved.
-//
+
 
 #import "forgotPasswordViewController.h"
 #import <Parse/PFUser.h>
