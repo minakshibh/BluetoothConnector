@@ -1,15 +1,15 @@
 //
-//  hangmanPeerup.pch
+//  PrefixHeader.pch
 //  HangmanPeerUp
 //
-//  Created by Krishna_Mac_4 on 24/11/15.
-//  Copyright © 2015 Apple, Inc. All rights reserved.
+//  Created by Krishna-Mac on 08/12/15.
+//  Copyright (c) 2015 Apple, Inc. All rights reserved.
 //
 
-#ifndef hangmanPeerup_pch
-#define hangmanPeerup_pch
+#ifndef HangmanPeerUp_PrefixHeader_pch
+#define HangmanPeerUp_PrefixHeader_pch
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
-#import "HelperAlert.h"
-#endif /* hangmanPeerup_pch */
+#import "H"
+#endif

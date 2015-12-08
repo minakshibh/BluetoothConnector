@@ -34,6 +34,12 @@
 		7AEDCFE3174695EB00947F1C /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AEDCFE2174695EB00947F1C /* Default-Landscape@2x~ipad.png */; };
 		7AEDCFF51746993000947F1C /* SessionContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEDCFF41746993000947F1C /* SessionContainer.m */; };
 		7AEDCFFF1746D5FB00947F1C /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEDCFFE1746D5FB00947F1C /* MultipeerConnectivity.framework */; };
+		97F1ED461C16A98000CBA9F8 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F1ED431C169A1700CBA9F8 /* libsqlite3.0.dylib */; };
+		97F1ED491C16A9C300CBA9F8 /* HelperAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F1ED481C16A9C300CBA9F8 /* HelperAlert.m */; };
+		97F1ED4E1C16B43F00CBA9F8 /* UITextField+HelperTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F1ED4D1C16B43F00CBA9F8 /* UITextField+HelperTextField.m */; };
+		97F1ED531C16BC5100CBA9F8 /* HelperIphoneCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F1ED501C16BC5100CBA9F8 /* HelperIphoneCheck.m */; };
+		97F1ED541C16BC5100CBA9F8 /* HelperUDLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F1ED521C16BC5100CBA9F8 /* HelperUDLib.m */; };
+		97F1ED571C16C23E00CBA9F8 /* CommonHelperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F1ED561C16C23E00CBA9F8 /* CommonHelperClass.m */; };
 		F927E2431C032016003F70B4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F927E2421C032016003F70B4 /* Reachability.m */; };
 		F927E24F1C032DA9003F70B4 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F927E2461C032DA9003F70B4 /* FMDatabase.m */; };
 		F927E2501C032DA9003F70B4 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F927E2481C032DA9003F70B4 /* FMDatabaseAdditions.m */; };
@@ -161,6 +167,18 @@
 		7AEDCFF31746993000947F1C /* SessionContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionContainer.h; sourceTree = "<group>"; };
 		7AEDCFF41746993000947F1C /* SessionContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionContainer.m; sourceTree = "<group>"; };
 		7AEDCFFE1746D5FB00947F1C /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
+		97F1ED431C169A1700CBA9F8 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		97F1ED471C16A9C300CBA9F8 /* HelperAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelperAlert.h; path = Controllers/HelperAlert.h; sourceTree = SOURCE_ROOT; };
+		97F1ED481C16A9C300CBA9F8 /* HelperAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelperAlert.m; path = Controllers/HelperAlert.m; sourceTree = SOURCE_ROOT; };
+		97F1ED4B1C16AD1C00CBA9F8 /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../Header.h; sourceTree = "<group>"; };
+		97F1ED4C1C16B43F00CBA9F8 /* UITextField+HelperTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+HelperTextField.h"; path = "Controllers/UITextField+HelperTextField.h"; sourceTree = SOURCE_ROOT; };
+		97F1ED4D1C16B43F00CBA9F8 /* UITextField+HelperTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+HelperTextField.m"; path = "Controllers/UITextField+HelperTextField.m"; sourceTree = SOURCE_ROOT; };
+		97F1ED4F1C16BC5100CBA9F8 /* HelperIphoneCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelperIphoneCheck.h; path = Controllers/HelperIphoneCheck.h; sourceTree = SOURCE_ROOT; };
+		97F1ED501C16BC5100CBA9F8 /* HelperIphoneCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelperIphoneCheck.m; path = Controllers/HelperIphoneCheck.m; sourceTree = SOURCE_ROOT; };
+		97F1ED511C16BC5100CBA9F8 /* HelperUDLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelperUDLib.h; path = Controllers/HelperUDLib.h; sourceTree = SOURCE_ROOT; };
+		97F1ED521C16BC5100CBA9F8 /* HelperUDLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelperUDLib.m; path = Controllers/HelperUDLib.m; sourceTree = SOURCE_ROOT; };
+		97F1ED551C16C23E00CBA9F8 /* CommonHelperClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonHelperClass.h; path = Controllers/CommonHelperClass.h; sourceTree = SOURCE_ROOT; };
+		97F1ED561C16C23E00CBA9F8 /* CommonHelperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonHelperClass.m; path = Controllers/CommonHelperClass.m; sourceTree = SOURCE_ROOT; };
 		F927E2411C032016003F70B4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		F927E2421C032016003F70B4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		F927E2451C032DA9003F70B4 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -252,7 +270,6 @@
 		F99A1D491C04295C00C15289 /* password-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password-icon@3x.png"; sourceTree = "<group>"; };
 		F99A1D4A1C04295C00C15289 /* search-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon@3x.png"; sourceTree = "<group>"; };
 		F99A1D4B1C04295C00C15289 /* username-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "username-icon@3x.png"; sourceTree = "<group>"; };
-		F99A1D571C042CC400C15289 /* hangmanPeerup.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hangmanPeerup.pch; sourceTree = "<group>"; };
 		F9B039E51BFD98B8008416E0 /* loginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loginViewController.h; sourceTree = "<group>"; };
 		F9B039E61BFD98B8008416E0 /* loginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginViewController.m; sourceTree = "<group>"; };
 		F9B039E71BFD98B8008416E0 /* loginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = loginViewController.xib; sourceTree = "<group>"; };
@@ -272,6 +289,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97F1ED461C16A98000CBA9F8 /* libsqlite3.0.dylib in Frameworks */,
 				F95E37701BFCA80000FB6FE2 /* Bolts.framework in Frameworks */,
 				F95E37671BFC9F5A00FB6FE2 /* libsqlite3.tbd in Frameworks */,
 				F95E37651BFC9F4A00FB6FE2 /* libz.tbd in Frameworks */,
@@ -319,6 +337,7 @@
 		7AEDCFC3174695EA00947F1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				97F1ED431C169A1700CBA9F8 /* libsqlite3.0.dylib */,
 				F95E376F1BFCA80000FB6FE2 /* Bolts.framework */,
 				F95E376C1BFCA56F00FB6FE2 /* Parse.framework */,
 				F95E376A1BFC9F7A00FB6FE2 /* Social.framework */,
@@ -344,10 +363,10 @@
 			isa = PBXGroup;
 			children = (
 				7AEDCFF61746993800947F1C /* Model */,
+				97F1ED451C16A87600CBA9F8 /* Views */,
 				7AEDCFF71746BA6200947F1C /* Controller */,
 				7AEDCFD3174695EA00947F1C /* AppDelegate.h */,
 				7AEDCFD4174695EA00947F1C /* AppDelegate.m */,
-				F99A1D571C042CC400C15289 /* hangmanPeerup.pch */,
 				F927E2541C032F41003F70B4 /* hangman.sqlite */,
 				7A3DD79217A716DD00A89D93 /* Images.xcassets */,
 				7AEDCFCB174695EA00947F1C /* Supporting Files */,
@@ -399,6 +418,24 @@
 		7AEDCFF71746BA6200947F1C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				97F1ED4B1C16AD1C00CBA9F8 /* Header.h */,
+				97F1ED511C16BC5100CBA9F8 /* HelperUDLib.h */,
+				97F1ED521C16BC5100CBA9F8 /* HelperUDLib.m */,
+				97F1ED471C16A9C300CBA9F8 /* HelperAlert.h */,
+				97F1ED481C16A9C300CBA9F8 /* HelperAlert.m */,
+				97F1ED4F1C16BC5100CBA9F8 /* HelperIphoneCheck.h */,
+				97F1ED501C16BC5100CBA9F8 /* HelperIphoneCheck.m */,
+				97F1ED551C16C23E00CBA9F8 /* CommonHelperClass.h */,
+				97F1ED561C16C23E00CBA9F8 /* CommonHelperClass.m */,
+				97F1ED4C1C16B43F00CBA9F8 /* UITextField+HelperTextField.h */,
+				97F1ED4D1C16B43F00CBA9F8 /* UITextField+HelperTextField.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		97F1ED451C16A87600CBA9F8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				F989A8F91BFB244200F64B1D /* SplashViewController.h */,
 				F989A8FA1BFB244200F64B1D /* SplashViewController.m */,
 				F989A8FB1BFB244200F64B1D /* SplashViewController.xib */,
@@ -417,7 +454,7 @@
 				F983AA521BF9BAB900CA5EEB /* scanViewController.m */,
 				F983AA531BF9BAB900CA5EEB /* scanViewController.xib */,
 			);
-			name = Controller;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		F927E2441C032CFE003F70B4 /* FMDatabase */ = {
@@ -587,6 +624,11 @@
 				CLASSPREFIX = AGC;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Apple, Inc.";
+				TargetAttributes = {
+					7AEDCFC0174695EA00947F1C = {
+						DevelopmentTeam = T5DY39F2BR;
+					};
+				};
 			};
 			buildConfigurationList = 7AEDCFBC174695EA00947F1C /* Build configuration list for PBXProject "HangmanPeerUp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -707,21 +749,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9B039F21BFDEFAF008416E0 /* forgotPasswordViewController.m in Sources */,
+				97F1ED571C16C23E00CBA9F8 /* CommonHelperClass.m in Sources */,
 				F9B039ED1BFDAA5D008416E0 /* registerViewController.m in Sources */,
 				F9B039E81BFD98B8008416E0 /* loginViewController.m in Sources */,
 				F927E24F1C032DA9003F70B4 /* FMDatabase.m in Sources */,
+				97F1ED541C16BC5100CBA9F8 /* HelperUDLib.m in Sources */,
 				F927E2431C032016003F70B4 /* Reachability.m in Sources */,
+				97F1ED531C16BC5100CBA9F8 /* HelperIphoneCheck.m in Sources */,
 				F927E2521C032DA9003F70B4 /* FMDatabaseQueue.m in Sources */,
 				F927E2531C032DA9003F70B4 /* FMResultSet.m in Sources */,
 				7A8A6E9A177BCFCC005E73B6 /* ProgressObserver.m in Sources */,
 				7AEDCFD5174695EA00947F1C /* AppDelegate.m in Sources */,
 				F989A8FC1BFB244200F64B1D /* SplashViewController.m in Sources */,
+				97F1ED491C16A9C300CBA9F8 /* HelperAlert.m in Sources */,
 				F927E2501C032DA9003F70B4 /* FMDatabaseAdditions.m in Sources */,
 				7AEDCFD1174695EA00947F1C /* main.m in Sources */,
 				7AEDCFF51746993000947F1C /* SessionContainer.m in Sources */,
 				F927E2511C032DA9003F70B4 /* FMDatabasePool.m in Sources */,
 				7A7695571746ED7E008A2DBF /* Transcript.m in Sources */,
 				F983AA541BF9BAB900CA5EEB /* scanViewController.m in Sources */,
+				97F1ED4E1C16B43F00CBA9F8 /* UITextField+HelperTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,8 +861,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rocky Uppal (3R7VB3H8QT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rocky Uppal (3R7VB3H8QT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -823,6 +870,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AdhocGroupChat/HangmanPeerUp-Prefix.pch";
 				INFOPLIST_FILE = "AdhocGroupChat/MultipeerGroupChat-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = HangmanPeerUp;
 				PROVISIONING_PROFILE = "";
@@ -837,8 +885,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rocky Uppal (3R7VB3H8QT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rocky Uppal (3R7VB3H8QT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -846,6 +894,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AdhocGroupChat/HangmanPeerUp-Prefix.pch";
 				INFOPLIST_FILE = "AdhocGroupChat/MultipeerGroupChat-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = HangmanPeerUp;
 				PROVISIONING_PROFILE = "";

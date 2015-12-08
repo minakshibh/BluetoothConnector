@@ -46,13 +46,64 @@
     self.confirmPasswordBackLbl.layer.borderWidth = 2.0;
     self.confirmPasswordBackLbl.layer.cornerRadius = 4.0;
     [self.confirmPasswordBackLbl setClipsToBounds:YES];
+    
+    UITapGestureRecognizer* tapper = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:self action:@selector(handleSingleTap:)];
+    tapper.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapper];
     // Do any additional setup after loading the view from its nib.
+}
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+{
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark UITextFieldDelegate methods
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField == self.confirmPasswordTxt)
+    {
+        [self.scrollView setContentOffset:CGPointMake(0.0, 50.0) animated:YES];
+    }
+    return  YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    [textField resignFirstResponder];
+    if (textField == self.confirmPasswordTxt)
+    {
+        [self.scrollView setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
+    }
+    
+    return  YES;
+}
+
+// Added to Category Class
+//- (BOOL)validateEmailWithString:(NSString*)email
+//{
+//    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+//    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+//    return [emailTest evaluateWithObject:email];
+//}
+
+#pragma mark Button Actions
+- (IBAction)loginAction:(id)sender {
+    loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+    //this is iphone 5 xib
+    
+    [self.navigationController pushViewController:loginVC animated:NO];
+}
+
 - (IBAction)signUpAction:(id)sender {
     [self.confirmPasswordTxt resignFirstResponder];
     [self.view endEditing:YES];
@@ -61,33 +112,49 @@
     
     if (self.usernameTxt.text.length == 0)
     {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please add Username" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        //        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please add Username" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        //        [alert show];
+        
+        // New Alert
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageUsernameRequired okBtn:OkButtonText];
+        return;
+    }
+    else if (![self.emailTxt emailValidation])
+    {
+        //        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Check Your Email Address" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        //        [alert show];
+        
+        // New Alert
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageIvalidEmail okBtn:OkButtonText];
+        [self.emailTxt becomeFirstResponder];
         return;
     }
     else if (self.passwordTxt.text.length==0)
     {
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Enter password." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert show];
-        return;
-    }
-    else  if (![self validateEmailWithString:self.emailTxt.text]==YES)
-    {
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Check Your Email Address" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert show];
-        [self.emailTxt becomeFirstResponder];
+        //        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Enter password." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        //        [alert show];
+        
+        // New Alert
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordRequired okBtn:OkButtonText];
         return;
     }
     else if (self.confirmPasswordTxt.text.length==0)
     {
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Enter password to confirm." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert show];
+        //        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Enter password to confirm." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        //        [alert show];
+        
+        // New Alert
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageConfirmPasswordRequired okBtn:OkButtonText];
         return;
     }
     else if (![password isEqualToString:confirmPassword])
     {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Password do not match." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        //        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Password do not match." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        //        [alert show];
+        
+        // New Alert
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordMismatch okBtn:OkButtonText];
+        
     }else{
         [kappDelegate ShowIndicator];
         NSString *userName = [NSString stringWithFormat:@"%@",self.usernameTxt.text];
@@ -111,49 +178,16 @@
             } else
             {   NSString *errorString = [error userInfo][@"error"];
                 NSLog(@"unable to Signup. Error = %@",errorString);
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alert show];
+                //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                //                [alert show];
+                
+                // New Alert
+                [HelperAlert alertWithOneBtn:AlertTitle description:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] okBtn:OkButtonText];
+                
                 // Show the errorString somewhere and let the user try again.
             }
         }];
     }
 }
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    return YES;
-}
-
-- (BOOL)validateEmailWithString:(NSString*)email
-{
-    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-    return [emailTest evaluateWithObject:email];
-}
-- (IBAction)loginAction:(id)sender {
-    loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-    //this is iphone 5 xib
-    
-    [self.navigationController pushViewController:loginVC animated:NO];
-}
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    if (textField == self.confirmPasswordTxt)
-    {
-        [self.scrollView setContentOffset:CGPointMake(0.0, 50.0) animated:YES];
-    }
-    return  YES;
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    [textField resignFirstResponder];
-    if (textField == self.confirmPasswordTxt)
-    {
-        [self.scrollView setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
-    }
-    
-    return  YES;
-}
-
 
 @end

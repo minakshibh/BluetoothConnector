@@ -47,8 +47,8 @@
     [self createSession];
     self.hintLbl.hidden = NO;
     self.searchImg.hidden = NO;
-    self.messageLbl.text = @"You are currently not connected to any device.";
-    self.browseBtnLbl.text = @"Browse";
+    self.messageLbl.text = NotConnectedToAnyDevice;
+    self.browseBtnLbl.text = BrowseButtontext;
 
     if (IS_IPAD) {
         self.browseBtnLbl.font = [UIFont systemFontOfSize:34.0];
@@ -71,6 +71,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark Button Actions
 - (IBAction)nearByAction:(UIButton*)sender {
     NSLog(@"%@",sender.titleLabel.text);
     if ([self.browseBtnLbl.text isEqualToString:@"Browse"]) {
@@ -88,7 +90,7 @@
         [format setDateFormat:@"hh:mm:ss a"];
         self.endTime = [format stringFromDate:date];
         
-        self.gameTime = [self remaningTime:self.startTime endDate:self.endTime];
+        self.gameTime = [CommonHelperClass remaningTime:self.startTime endDate:self.endTime];
         Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
         NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
         if (networkStatus == NotReachable) {
@@ -104,6 +106,48 @@
     }
     
 }
+
+- (IBAction)selectedGameAction:(UIButton *)sender {
+    if (sender.tag == 0) {
+        self.gamePlayed = @"Hangman";
+    }else{
+        self.gamePlayed = @"Battle Ship";
+    }
+    Transcript *transcript = [self.sessionContainer sendMessage:@"Game Selected"];
+    
+    if (transcript) {
+        // Add the transcript to the table view data source and reload
+        [self insertTranscript:transcript];
+    }
+}
+
+- (IBAction)logoutAction:(id)sender {
+    [PFUser logOut];
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        return;
+    } else {
+        
+        //        loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+        //        //this is iphone 5 xib
+        //
+        //        [self.navigationController pushViewController:loginVC animated:NO];
+        
+        // Correct Approach for logout using pop action.
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            
+            //Do not forget to import AnOldViewController.h
+            if ([controller isKindOfClass:[loginViewController class]]) {
+                
+                [self.navigationController popToViewController:controller
+                                                      animated:YES];
+                break;
+            }
+        }
+    }
+}
+
+#pragma mark Useful Methods
 -(void)aTime
 {
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
@@ -242,7 +286,10 @@
 -(void)saveData
 {
     // Create PFObject with recipe information
-    NSString *playername = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"Username"]];
+    //NSString *playername = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"Username"]];
+    
+    //Added Class for user defaults
+    NSString *playername = [NSString stringWithFormat:@"%@",[HelperUDLib getObject:@"Username"]];
     PFObject *gameData = [PFObject objectWithClassName:@"gameScores"];
     [gameData setObject:self.gameTime forKey:@"gameTime"];
     [gameData setObject:playername forKey:@"playerName"];
@@ -261,56 +308,47 @@
                 [self insertTranscript:transcript];
             }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the game score" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            alert.tag = 0;
-            [alert show];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the game score" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//            alert.tag = 0;
+//            [alert show];
+            
+            // New Alert
+            [HelperAlert alertWithOneBtn:AlerttTitleComplete description:AlertMessageSavedScoreSuccessfully okBtn:OkButtonText withTag:0];
             
             // Dismiss the controller
             [self dismissViewControllerAnimated:YES completion:nil];
             
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            alert.tag = 3;
-            [alert show];
-            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            alert.tag = 3;
+//            [alert show];
+            [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText withTag:3];
         }
         
     }];
 }
 
--(NSString*)remaningTime:(NSString *)startDate endDate:(NSString*)endDate{
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setLocale:[NSLocale currentLocale]];
-    [format setDateFormat:@"hh:mm:ss a"];
-    NSDate *sDate = [format dateFromString:startDate];
-    NSDate *eDate = [format dateFromString:endDate];
-    NSInteger seconds;
-    NSInteger minutes = 0;
-    NSString *durationString;
-    NSTimeInterval interval = [eDate timeIntervalSinceDate:sDate];
-    if (interval > 60) {
-        minutes=interval/60;
-        durationString=[NSString stringWithFormat:@"%2ld mins",(long)minutes];
-    }else{
-        seconds = interval;
-        durationString=[NSString stringWithFormat:@"%2ld sec",(long)seconds];
-    }
-    
-    return durationString;
-}
-- (IBAction)selectedGameAction:(UIButton *)sender {
-    if (sender.tag == 0) {
-        self.gamePlayed = @"Hangman";
-    }else{
-        self.gamePlayed = @"Battle Ship";
-    }
-    Transcript *transcript = [self.sessionContainer sendMessage:@"Game Selected"];
-    
-    if (transcript) {
-        // Add the transcript to the table view data source and reload
-        [self insertTranscript:transcript];
-    }
-}
+// Moved this method to CommoHelperClasses
+//-(NSString*)remaningTime:(NSString *)startDate endDate:(NSString*)endDate{
+//    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+//    [format setLocale:[NSLocale currentLocale]];
+//    [format setDateFormat:@"hh:mm:ss a"];
+//    NSDate *sDate = [format dateFromString:startDate];
+//    NSDate *eDate = [format dateFromString:endDate];
+//    NSInteger seconds;
+//    NSInteger minutes = 0;
+//    NSString *durationString;
+//    NSTimeInterval interval = [eDate timeIntervalSinceDate:sDate];
+//    if (interval > 60) {
+//        minutes=interval/60;
+//        durationString=[NSString stringWithFormat:@"%2ld mins",(long)minutes];
+//    }else{
+//        seconds = interval;
+//        durationString=[NSString stringWithFormat:@"%2ld sec",(long)seconds];
+//    }
+//    
+//    return durationString;
+//}
 
 #pragma mark - SessionContainerDelegate
 
@@ -331,21 +369,13 @@
     [_transcripts replaceObjectAtIndex:idx withObject:transcript];
     
 }
-- (IBAction)logoutAction:(id)sender {
-    [PFUser logOut];
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser) {
-        return;
-    } else {
-        loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-        //this is iphone 5 xib
-        
-        [self.navigationController pushViewController:loginVC animated:NO];
-    }
-}
 
 - (void) saveDataToDatabase{
-    NSString *playername = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"Username"]];
+//    NSString *playername = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"Username"]];
+    
+    //Added Class for user defaults
+    NSString *playername = [NSString stringWithFormat:@"%@",[HelperUDLib getObject:@"Username"]];
+    
     docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     documentsDir = [docPaths objectAtIndex:0];
     dbPath = [documentsDir   stringByAppendingPathComponent:@"hangman.sqlite"];
@@ -369,7 +399,10 @@
 }
 -(void)addRanking
 {
-    NSString *playername = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"Username"]];
+    //NSString *playername = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"Username"]];
+    
+    //Added Class for user defaults
+    NSString *playername = [NSString stringWithFormat:@"%@",[HelperUDLib getObject:@"Username"]];
     PFQuery *query = [PFQuery queryWithClassName:@"gameRanking"];
     [query whereKey:@"playerName" equalTo:playername];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -389,17 +422,23 @@
                 [gameRatingData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [kappDelegate HideIndicator];
                     if (!error) {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the your ranking." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                        alert.tag=1;
-                        [alert show];
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the your ranking." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//                        alert.tag=1;
+//                        [alert show];
+                        
+                        // New Alert
+                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:AlertMessageSuccessfullyRankingSaved okBtn:OkButtonText withTag:1];
                         
                         // Dismiss the controller
                         [self dismissViewControllerAnimated:YES completion:nil];
                         
                     } else {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                        alert.tag =2;
-                        [alert show];
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                        alert.tag =2;
+//                        [alert show];
+                        
+                        // New Alert
+                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText withTag:2];
                         
                     }
                     
@@ -414,13 +453,20 @@
                 [gameRatingData incrementKey:@"gamePoint"];
                 [gameRatingData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the your ranking." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                        alert.tag=1;
-                        [alert show];
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the your ranking." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//                        alert.tag=1;
+//                        [alert show];
+                        
+                        // New Alert
+                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:AlertMessageSuccessfullyRankingSaved okBtn:OkButtonText withTag:1];
+                        
                     } else {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                        alert.tag =2;
-                        [alert show];
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                        alert.tag =2;
+//                        [alert show];
+                        
+                        // New Alert
+                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText withTag:2];
                     }
                 }];
             }

@@ -48,13 +48,17 @@
     NSString *passwordStr = [NSString stringWithFormat:@"%@",self.passwordTxt.text];
     
     if (usernameStr.length == 0) {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please add First Name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please add First Name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alert show];
+        // New Alert view added using class method
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageFirstNameRequired okBtn:OkButtonText];
     }
     else if (passwordStr.length == 0)
     {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please add Last Name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please add Last Name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alert show];
+        // New Alert
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageLastNameRequired okBtn:OkButtonText];
     }
     else
     {
@@ -66,14 +70,19 @@
                                         if (user) {
                                             NSLog(@"Successful login.");
                                             
-                                            [[NSUserDefaults standardUserDefaults] setValue:self.usernameTxt.text forKey:@"Username"];
+                                            //[[NSUserDefaults standardUserDefaults] setValue:self.usernameTxt.text forKey:@"Username"];
+                                            [HelperUDLib setObject:self.usernameTxt.text forKey:@"Username"];
                                             scanViewController *scanVC=[[scanViewController alloc]initWithNibName:@"scanViewController" bundle:[NSBundle mainBundle]];
                                             //this is iphone 5 xib
                                             
                                             [self.navigationController pushViewController:scanVC animated:NO];
                                         } else {
-                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                            [alert show];
+//                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//                                            [alert show];
+                                            
+                                            // New Alert
+                                            [HelperAlert alertWithOneBtn:AlertTitle description:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] okBtn:OkButtonText];
+                                            
                                             NSLog(@"The login failed. Error = %@", [error userInfo][@"error"]);
                                             // The login failed. Check error to see why.
                                         }

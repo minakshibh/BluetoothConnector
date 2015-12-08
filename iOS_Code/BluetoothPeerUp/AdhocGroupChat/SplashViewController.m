@@ -41,6 +41,14 @@
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
         scanViewController *scanVC;
+        
+        // Made some changes for logout functionality.
+        loginViewController* loginview = [[loginViewController alloc] initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+        NSMutableArray *navigationArray = [[NSMutableArray alloc] initWithArray: self.navigationController.viewControllers];
+        [navigationArray addObject:loginview];  // You can pass your index here
+        self.navigationController.viewControllers = navigationArray;
+        
+        
         if (IS_IPAD) {
             scanVC=[[scanViewController alloc]initWithNibName:@"scanViewController" bundle:[NSBundle mainBundle]];
         }else if (IS_IPHONE){
