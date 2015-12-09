@@ -24,6 +24,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (IS_IPAD) {
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"1~ipad"]];
+    }
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
@@ -34,33 +37,23 @@
 {
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
-        scanViewController *scanVC;
         
+        scanViewController *scanVC;
         // Made some changes for logout functionality.
         loginViewController* loginview = [[loginViewController alloc] initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
         NSMutableArray *navigationArray = [[NSMutableArray alloc] initWithArray: self.navigationController.viewControllers];
-        [navigationArray addObject:loginview];  // You can pass your index here
+        [navigationArray addObject:loginview];
+        
         self.navigationController.viewControllers = navigationArray;
-        
-        
-        if (IS_IPAD) {
-            scanVC=[[scanViewController alloc]initWithNibName:@"scanViewController" bundle:[NSBundle mainBundle]];
-        }else if (IS_IPHONE){
-            scanVC=[[scanViewController alloc]initWithNibName:@"scanViewController" bundle:[NSBundle mainBundle]];
-        //this is iphone 5 xib
-        }
+        scanVC=[[scanViewController alloc]initWithNibName:@"scanViewController" bundle:[NSBundle mainBundle]];
         [self.navigationController pushViewController:scanVC animated:NO];
-    } else {
-        loginViewController *loginVC;
-        if (IS_IPAD) {
-            loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController_ipad" bundle:[NSBundle mainBundle]];
-        }else if (IS_IPHONE){
-            loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-            //this is iphone 5 xib
-        }
-        //this is iphone 5 xib
         
+    } else {
+        
+        loginViewController *loginVC;
+        loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
         [self.navigationController pushViewController:loginVC animated:NO];
+        
     }
     
 }

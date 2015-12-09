@@ -56,7 +56,7 @@
 
 //For Date
 +(void)setObjectForDate:(NSDate *)dateIs KeyIs:(NSString*)keyIs{
-   
+    
     [[NSUserDefaults standardUserDefaults] setObject:dateIs forKey:keyIs];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }

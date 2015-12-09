@@ -8,7 +8,7 @@
     CGSize size = [str sizeWithFont:[UIFont fontWithName:@"Roboto-Light" size:10] constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
     NSLog(@"%f",size.height);
     return size.height;
-   
+    
 }
 
 +(NSString *)jsonWrapper:(id)input

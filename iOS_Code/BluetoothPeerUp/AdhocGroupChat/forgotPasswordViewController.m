@@ -8,6 +8,11 @@
 @interface forgotPasswordViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *emailBackLbl;
 @property (strong, nonatomic) IBOutlet UITextField *emailTxt;
+@property (strong, nonatomic) IBOutlet UILabel *lblHeadingEmail;
+@property (strong, nonatomic) IBOutlet UIImageView *imgEmail;
+@property (strong, nonatomic) IBOutlet UIButton *btnRecoverPassword;
+@property (strong, nonatomic) IBOutlet UIButton *btnLogin;
+@property (strong, nonatomic) IBOutlet UIButton *btnRegister;
 
 @end
 
@@ -20,12 +25,21 @@
     self.emailBackLbl.layer.cornerRadius = 4.0;
     [self.emailBackLbl setClipsToBounds:YES];
     
-   UITapGestureRecognizer* tapper = [[UITapGestureRecognizer alloc]
-              initWithTarget:self action:@selector(handleSingleTap:)];
+    UITapGestureRecognizer* tapper = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:self action:@selector(handleSingleTap:)];
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
     
-    // Do any additional setup after loading the view from its nib.
+    if (IS_IPAD) {
+        self.lblHeadingEmail.font = [UIFont systemFontOfSize:25];
+        self.emailTxt.font = [UIFont systemFontOfSize:25];
+        [self.imgEmail setFrame:CGRectMake(self.imgEmail.frame.origin.x+5, self.imgEmail.frame.origin.y+1, self.imgEmail.frame.size.width-5, self.imgEmail.frame.size.height-2)];
+        [self.view addSubview:self.imgEmail];
+        self.btnLogin.titleLabel.font = [UIFont systemFontOfSize:30];
+        self.btnRecoverPassword.titleLabel.font = [UIFont systemFontOfSize:30];
+        self.btnRegister.titleLabel.font = [UIFont systemFontOfSize:30];
+    }
+    
 }
 - (void)handleSingleTap:(UITapGestureRecognizer *) sender
 {
@@ -36,23 +50,17 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark Button Actions 
+#pragma mark Button Actions
 - (IBAction)recoverPasswordAction:(id)sender {
     if (self.emailTxt.text.length == 0) {
-//        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Enter password." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//        [alert show];
         
-        // New Alert
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordRequired okBtn:OkButtonText];
         
         return;
     }
     else  if (![self.emailTxt emailValidation])
     {
-//        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Check Your Email Address" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//        [alert show];
         
-        // New Alert
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageIvalidEmail okBtn:OkButtonText];
         
         [self.emailTxt becomeFirstResponder];
@@ -60,57 +68,36 @@
     }else{
         [kappDelegate ShowIndicator];
         [PFUser requestPasswordResetForEmailInBackground:self.emailTxt.text block:^(BOOL succeeded,NSError *error)
-        {
-            [kappDelegate HideIndicator];
-            if (!error) {
-                loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-                //this is iphone 5 xib
-                
-                [self.navigationController pushViewController:loginVC animated:NO];
-                
-            }
-            else
-            {
-                NSString *errorString = [error userInfo][@"error"];
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:[NSString stringWithFormat: @"Password reset failed: %@",errorString] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-//                [alert show];
-                
-                // New Alert
-                [HelperAlert alertWithOneBtn:AlertTitle description:[NSString stringWithFormat: @"Password reset failed: %@",errorString] okBtn:OkButtonText];
-                return;
-            }
-        }];
+         {
+             [kappDelegate HideIndicator];
+             if (!error) {
+                 loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+                 
+                 [self.navigationController pushViewController:loginVC animated:NO];
+                 
+             }
+             else
+             {
+                 NSString *errorString = [error userInfo][@"error"];
+                 
+                 [HelperAlert alertWithOneBtn:AlertTitle description:[NSString stringWithFormat: @"Password reset failed: %@",errorString] okBtn:OkButtonText];
+                 return;
+             }
+         }];
         
     }
 }
-// Added to Category Class
-//- (BOOL)validateEmailWithString:(NSString*)email
-//{
-//    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-//    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-//    return [emailTest evaluateWithObject:email];
-//}
+
 - (IBAction)loginAction:(id)sender {
     loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-    //this is iphone 5 xib
     
     [self.navigationController pushViewController:loginVC animated:NO];
 }
 - (IBAction)registerAction:(id)sender {
     registerViewController *registerVC=[[registerViewController alloc]initWithNibName:@"registerViewController" bundle:[NSBundle mainBundle]];
-    //this is iphone 5 xib
     
     [self.navigationController pushViewController:registerVC animated:NO];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

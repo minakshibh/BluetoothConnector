@@ -127,7 +127,6 @@
 		F9B039EE1BFDAA5D008416E0 /* registerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B039EC1BFDAA5D008416E0 /* registerViewController.xib */; };
 		F9B039F21BFDEFAF008416E0 /* forgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B039F01BFDEFAF008416E0 /* forgotPasswordViewController.m */; };
 		F9B039F31BFDEFAF008416E0 /* forgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B039F11BFDEFAF008416E0 /* forgotPasswordViewController.xib */; };
-		F9BA37D71C0F0794008D20B6 /* SplashViewController_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9BA37D61C0F0794008D20B6 /* SplashViewController_ipad.xib */; };
 		F9BA37D91C0F0861008D20B6 /* loginViewController_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9BA37D81C0F0861008D20B6 /* loginViewController_ipad.xib */; };
 		F9BA37DB1C0F0A16008D20B6 /* innerBg~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BA37DA1C0F0A16008D20B6 /* innerBg~ipad.png */; };
 /* End PBXBuildFile section */
@@ -179,8 +178,8 @@
 		97F1ED521C16BC5100CBA9F8 /* HelperUDLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelperUDLib.m; path = Controllers/HelperUDLib.m; sourceTree = SOURCE_ROOT; };
 		97F1ED551C16C23E00CBA9F8 /* CommonHelperClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonHelperClass.h; path = Controllers/CommonHelperClass.h; sourceTree = SOURCE_ROOT; };
 		97F1ED561C16C23E00CBA9F8 /* CommonHelperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonHelperClass.m; path = Controllers/CommonHelperClass.m; sourceTree = SOURCE_ROOT; };
-		F927E2411C032016003F70B4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		F927E2421C032016003F70B4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		F927E2411C032016003F70B4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../Reachability.h; sourceTree = "<group>"; };
+		F927E2421C032016003F70B4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../Reachability.m; sourceTree = "<group>"; };
 		F927E2451C032DA9003F70B4 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		F927E2461C032DA9003F70B4 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		F927E2471C032DA9003F70B4 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -279,7 +278,6 @@
 		F9B039EF1BFDEFAF008416E0 /* forgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forgotPasswordViewController.h; sourceTree = "<group>"; };
 		F9B039F01BFDEFAF008416E0 /* forgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = forgotPasswordViewController.m; sourceTree = "<group>"; };
 		F9B039F11BFDEFAF008416E0 /* forgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = forgotPasswordViewController.xib; sourceTree = "<group>"; };
-		F9BA37D61C0F0794008D20B6 /* SplashViewController_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashViewController_ipad.xib; sourceTree = "<group>"; };
 		F9BA37D81C0F0861008D20B6 /* loginViewController_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = loginViewController_ipad.xib; sourceTree = "<group>"; };
 		F9BA37DA1C0F0A16008D20B6 /* innerBg~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "innerBg~ipad.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -314,9 +312,6 @@
 		7AEDCFB8174695EA00947F1C = {
 			isa = PBXGroup;
 			children = (
-				F927E2441C032CFE003F70B4 /* FMDatabase */,
-				F927E2411C032016003F70B4 /* Reachability.h */,
-				F927E2421C032016003F70B4 /* Reachability.m */,
 				F96047E11BFF012000C3BCFD /* Demo App Slicing */,
 				F95E37531BFC9EA400FB6FE2 /* Parser */,
 				F989A8FE1BFB24EE00F64B1D /* Demo App Design */,
@@ -405,6 +400,9 @@
 		7AEDCFF61746993800947F1C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F927E2411C032016003F70B4 /* Reachability.h */,
+				F927E2421C032016003F70B4 /* Reachability.m */,
+				F927E2441C032CFE003F70B4 /* FMDatabase */,
 				7AEDCFF31746993000947F1C /* SessionContainer.h */,
 				7AEDCFF41746993000947F1C /* SessionContainer.m */,
 				7A7695551746ED7E008A2DBF /* Transcript.h */,
@@ -439,7 +437,6 @@
 				F989A8F91BFB244200F64B1D /* SplashViewController.h */,
 				F989A8FA1BFB244200F64B1D /* SplashViewController.m */,
 				F989A8FB1BFB244200F64B1D /* SplashViewController.xib */,
-				F9BA37D61C0F0794008D20B6 /* SplashViewController_ipad.xib */,
 				F9B039E51BFD98B8008416E0 /* loginViewController.h */,
 				F9B039E61BFD98B8008416E0 /* loginViewController.m */,
 				F9B039E71BFD98B8008416E0 /* loginViewController.xib */,
@@ -472,6 +469,7 @@
 				F927E24E1C032DA9003F70B4 /* FMResultSet.m */,
 			);
 			name = FMDatabase;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		F95E37531BFC9EA400FB6FE2 /* Parser */ = {
@@ -661,7 +659,6 @@
 				F960486D1BFF012000C3BCFD /* search-icon@2x.png in Resources */,
 				F960483F1BFF012000C3BCFD /* logo~ipad@2x.png in Resources */,
 				7AEDCFD9174695EA00947F1C /* Default@2x.png in Resources */,
-				F9BA37D71C0F0794008D20B6 /* SplashViewController_ipad.xib in Resources */,
 				7A3DD78E17A716BD00A89D93 /* Icon-Small@2x.png in Resources */,
 				F99A1D561C04295C00C15289 /* username-icon@3x.png in Resources */,
 				7A3DD78F17A716BD00A89D93 /* Icon.png in Resources */,

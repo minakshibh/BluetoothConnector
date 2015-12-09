@@ -13,6 +13,16 @@
 @property (strong, nonatomic) IBOutlet UITextField *passwordTxt;
 @property (strong, nonatomic) IBOutlet UILabel *confirmPasswordBackLbl;
 @property (strong, nonatomic) IBOutlet UITextField *confirmPasswordTxt;
+@property (strong, nonatomic) IBOutlet UILabel *lblHeadingUsername;
+@property (strong, nonatomic) IBOutlet UILabel *lblHeadingEmail;
+@property (strong, nonatomic) IBOutlet UILabel *lblHeadingPassword;
+@property (strong, nonatomic) IBOutlet UILabel *lblHeadingConfirmPassword;
+@property (strong, nonatomic) IBOutlet UIButton *btnSignup;
+@property (strong, nonatomic) IBOutlet UIButton *btnLogin;
+@property (strong, nonatomic) IBOutlet UIImageView *imgUsername;
+@property (strong, nonatomic) IBOutlet UIImageView *imgEmail;
+@property (strong, nonatomic) IBOutlet UIImageView *imgPassword;
+@property (strong, nonatomic) IBOutlet UIImageView *imgConfirmPassword;
 
 @end
 
@@ -44,6 +54,31 @@
                                       initWithTarget:self action:@selector(handleSingleTap:)];
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
+    
+    if (IS_IPAD) {
+        self.lblHeadingUsername.font = [UIFont systemFontOfSize:25];
+        self.lblHeadingEmail.font = [UIFont systemFontOfSize:25];
+        self.lblHeadingPassword.font = [UIFont systemFontOfSize:25];
+        self.lblHeadingConfirmPassword.font = [UIFont systemFontOfSize:25];
+        self.usernameTxt.font = [UIFont systemFontOfSize:25];
+        self.passwordTxt.font = [UIFont systemFontOfSize:25];
+        self.confirmPasswordTxt.font = [UIFont systemFontOfSize:25];
+        self.emailTxt.font = [UIFont systemFontOfSize:25];
+        self.btnLogin.titleLabel.font = [UIFont systemFontOfSize:30];
+        self.btnSignup.titleLabel.font = [UIFont systemFontOfSize:30];
+        
+        [self.imgEmail setFrame:CGRectMake(self.imgEmail.frame.origin.x+5, self.imgEmail.frame.origin.y, self.imgEmail.frame.size.width-5, self.imgEmail.frame.size.height)];
+        [self.view addSubview:self.imgEmail];
+        
+        [self.imgUsername setFrame:CGRectMake(self.imgUsername.frame.origin.x+5, self.imgUsername.frame.origin.y, self.imgUsername.frame.size.width-3, self.imgUsername.frame.size.height)];
+        [self.view addSubview:self.imgUsername];
+        
+        [self.imgPassword setFrame:CGRectMake(self.imgPassword.frame.origin.x+3, self.imgPassword.frame.origin.y, self.imgPassword.frame.size.width-3, self.imgPassword.frame.size.height)];
+        [self.view addSubview:self.imgPassword];
+        
+        [self.imgConfirmPassword setFrame:CGRectMake(self.imgConfirmPassword.frame.origin.x+4, self.imgConfirmPassword.frame.origin.y, self.imgConfirmPassword.frame.size.width-3, self.imgConfirmPassword.frame.size.height)];
+        [self.view addSubview:self.imgConfirmPassword];
+    }
     // Do any additional setup after loading the view from its nib.
 }
 - (void)handleSingleTap:(UITapGestureRecognizer *) sender
@@ -81,19 +116,10 @@
     return  YES;
 }
 
-// Added to Category Class
-//- (BOOL)validateEmailWithString:(NSString*)email
-//{
-//    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-//    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-//    return [emailTest evaluateWithObject:email];
-//}
 
 #pragma mark Button Actions
 - (IBAction)loginAction:(id)sender {
     loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-    //this is iphone 5 xib
-    
     [self.navigationController pushViewController:loginVC animated:NO];
 }
 
@@ -105,47 +131,32 @@
     
     if (self.usernameTxt.text.length == 0)
     {
-        //        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please add Username" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        //        [alert show];
         
-        // New Alert
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageUsernameRequired okBtn:OkButtonText];
         return;
     }
     else if (![self.emailTxt emailValidation])
     {
-        //        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Check Your Email Address" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        //        [alert show];
         
-        // New Alert
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageIvalidEmail okBtn:OkButtonText];
         [self.emailTxt becomeFirstResponder];
         return;
     }
     else if (self.passwordTxt.text.length==0)
     {
-        //        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Enter password." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        //        [alert show];
         
-        // New Alert
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordRequired okBtn:OkButtonText];
         return;
     }
     else if (self.confirmPasswordTxt.text.length==0)
     {
-        //        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Please Enter password to confirm." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        //        [alert show];
         
-        // New Alert
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageConfirmPasswordRequired okBtn:OkButtonText];
         return;
     }
     else if (![password isEqualToString:confirmPassword])
     {
-        //        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:@"Password do not match." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        //        [alert show];
         
-        // New Alert
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordMismatch okBtn:OkButtonText];
         
     }else{
@@ -164,20 +175,14 @@
             if (!error) {
                 NSLog(@"SignUp Successful");
                 loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-                //this is iphone 5 xib
                 
                 [self.navigationController pushViewController:loginVC animated:NO];
-                // Hooray! Let them use the app now.
+                
             } else
             {   NSString *errorString = [error userInfo][@"error"];
                 NSLog(@"unable to Signup. Error = %@",errorString);
-                //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hangman Peerup" message:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                //                [alert show];
                 
-                // New Alert
                 [HelperAlert alertWithOneBtn:AlertTitle description:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] okBtn:OkButtonText];
-                
-                // Show the errorString somewhere and let the user try again.
             }
         }];
     }
