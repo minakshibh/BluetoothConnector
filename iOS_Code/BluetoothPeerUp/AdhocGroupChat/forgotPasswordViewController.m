@@ -52,17 +52,12 @@
 }
 #pragma mark Button Actions
 - (IBAction)recoverPasswordAction:(id)sender {
-    if (self.emailTxt.text.length == 0) {
-        
+    if ([self.emailTxt isEmpty]) {
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordRequired okBtn:OkButtonText];
-        
         return;
     }
-    else  if (![self.emailTxt emailValidation])
-    {
-        
+    else  if (![self.emailTxt emailValidation]){
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageIvalidEmail okBtn:OkButtonText];
-        
         [self.emailTxt becomeFirstResponder];
         return;
     }else{
@@ -72,14 +67,11 @@
              [kappDelegate HideIndicator];
              if (!error) {
                  loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-                 
                  [self.navigationController pushViewController:loginVC animated:NO];
                  
              }
-             else
-             {
+             else{
                  NSString *errorString = [error userInfo][@"error"];
-                 
                  [HelperAlert alertWithOneBtn:AlertTitle description:[NSString stringWithFormat: @"Password reset failed: %@",errorString] okBtn:OkButtonText];
                  return;
              }

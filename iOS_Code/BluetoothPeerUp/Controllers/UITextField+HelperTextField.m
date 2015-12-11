@@ -76,42 +76,6 @@
     
 }
 
-//- (void)textfieldwithLabel
-//{
-//
-//    //Creating UIlabel on Textfield
-//    UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 17 + 12*isipad())];
-//    lable.textAlignment = NSTextAlignmentLeft;
-//    lable.contentMode= UIControlContentVerticalAlignmentTop;
-//    lable.backgroundColor = [UIColor clearColor];
-//    lable.font = [UIFont fontWithName:@"Roboto-Regular" size:15+ 10*isipad()];
-//    lable.numberOfLines = 0;
-//    lable.textColor= [UIColor colorWithRed:0/255.0f green:81/255.0f blue:138/255.0f alpha:1.0f];
-//    lable.text = self.placeholder;
-//    [self addSubview:lable];
-//
-//    //Realigning the Textfield frame
-//    CGRect frame = self.frame;
-//    frame.origin.y = frame.origin.y+20;
-//    frame.size.height = frame.size.height-15;
-//    self.frame = frame;
-//    self.placeholder = @"";
-//
-//    //Textfield Text and contentVerticalAlignment
-//    self.textAlignment = NSTextAlignmentLeft;
-//    self.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-//
-//    //Drawing an Layer on the bottom of texfield
-//    CALayer *border = [CALayer layer];
-//    CGFloat borderWidth = 1;
-//    border.borderColor = [UIColor lightGrayColor].CGColor;
-//    border.frame = CGRectMake(-5, self.frame.size.height - borderWidth, self.frame.size.width+5, self.frame.size.height);
-//    border.borderWidth = borderWidth;
-//    [self.layer addSublayer:border];
-//    self.layer.masksToBounds = YES;
-//
-//}
-
 -(BOOL)isEmpty
 {
     self.text = [self.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
@@ -120,45 +84,5 @@
     }
     return NO;
 }
-
-
-//- (void)textfieldwithLabelBlack
-//{
-//
-//    //Creating UIlabel on Textfield
-//    UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 15 +12 *isipad())];
-//    lable.textAlignment = NSTextAlignmentLeft;
-//    lable.contentMode= UIControlContentVerticalAlignmentTop;
-//    lable.backgroundColor = [UIColor clearColor];
-//    lable.font = [UIFont fontWithName:@"Roboto-Regular" size:15 + 10*isipad()];
-//    lable.numberOfLines = 0;
-//    lable.textColor= [UIColor colorWithRed:55/255.0f green:55/255.0f blue:55/255.0f alpha:1.0f];
-//    lable.text = self.placeholder;
-//    [self addSubview:lable];
-//
-//    //Realigning the Textfield frame
-//    CGRect frame = self.frame;
-//    frame.origin.y = frame.origin.y+20;
-//    frame.size.height = frame.size.height-15;
-//    self.frame = frame;
-//    self.placeholder = @"";
-////    NSMutableAttributedString *tee = [[NSMutableAttributedString alloc] init];
-////    [tee addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Roboto-Bold" size:50] range:NSMakeRange(0, self.text.length)];
-////    self.attributedPlaceholder = tee;
-//
-//    //Textfield Text and contentVerticalAlignment
-//    self.textAlignment = NSTextAlignmentLeft;
-//    self.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-//
-//    //Drawing an Layer on the bottom of texfield
-//    CALayer *border = [CALayer layer];
-//    CGFloat borderWidth = 1;
-//    border.borderColor = [UIColor lightGrayColor].CGColor;
-//    border.frame = CGRectMake(-5, self.frame.size.height - borderWidth, self.frame.size.width+5, self.frame.size.height);
-//    border.borderWidth = borderWidth;
-//    [self.layer addSublayer:border];
-//    self.layer.masksToBounds = YES;
-//
-//}
 
 @end

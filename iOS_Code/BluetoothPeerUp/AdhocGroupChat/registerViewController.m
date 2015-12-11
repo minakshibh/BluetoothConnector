@@ -129,10 +129,14 @@
     NSString *password = [NSString stringWithFormat:@"%@",self.passwordTxt.text];
     NSString *confirmPassword = [NSString stringWithFormat:@"%@",self.confirmPasswordTxt.text];
     
-    if (self.usernameTxt.text.length == 0)
+    if ([self.usernameTxt isEmpty])
     {
         
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageUsernameRequired okBtn:OkButtonText];
+        return;
+    }
+    else if ([self.emailTxt isEmpty]){
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageEmailRequired okBtn:OkButtonText];
         return;
     }
     else if (![self.emailTxt emailValidation])
@@ -142,13 +146,13 @@
         [self.emailTxt becomeFirstResponder];
         return;
     }
-    else if (self.passwordTxt.text.length==0)
+    else if ([self.passwordTxt isEmpty])
     {
         
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordRequired okBtn:OkButtonText];
         return;
     }
-    else if (self.confirmPasswordTxt.text.length==0)
+    else if ([self.confirmPasswordTxt isEmpty])
     {
         
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageConfirmPasswordRequired okBtn:OkButtonText];

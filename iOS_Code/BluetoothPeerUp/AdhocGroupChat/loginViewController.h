@@ -2,6 +2,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface loginViewController : UIViewController
+@interface loginViewController : UIViewController<UIAlertViewDelegate>
 
 @end

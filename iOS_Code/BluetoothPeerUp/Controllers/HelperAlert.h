@@ -11,14 +11,6 @@
 
 +(UIAlertView*) alertWithOneBtn:(NSString*)title description:(NSString*)description okBtn:(NSString *)okBtn;
 
-/*This method is for AlertView having 1 button with tag (OK Button)
- @param title - is used to give the title to alert
- @param description - is used to give description message to alert
- @param okBtn - is used to give button title
- @param wihtTag - is used to set tag for alert view
- */
-+ (UIAlertView *) alertWithOneBtn:(NSString*)title description:(NSString*)description okBtn:(NSString *)okBtn withTag:(int)tag;
-
 /*This method is for alert view with 2 buttons (ok and cancel)
  @param title - is used to give the title to alert
  @param description - is used to give description message to alert
@@ -27,7 +19,6 @@
 */
 
 +(UIAlertView*) alertWithTwoBtns:(NSString*)title description:(NSString*)description okBtn:(NSString *)okBtn cancelBtn:(NSString*)cancelBtn;
-
 
 @end
 

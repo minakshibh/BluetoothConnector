@@ -79,7 +79,6 @@
 
 
 //For Dictionary
-
 +(void)setObjectForDictionary:(NSMutableDictionary *)dictionary KeyIs:(NSString*)keyIs{
     [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:keyIs];
     [[NSUserDefaults standardUserDefaults]synchronize];

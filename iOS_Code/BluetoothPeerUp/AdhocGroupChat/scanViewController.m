@@ -294,14 +294,20 @@
                 [self insertTranscript:transcript];
             }
             
-            [HelperAlert alertWithOneBtn:AlerttTitleComplete description:AlertMessageSavedScoreSuccessfully okBtn:OkButtonText withTag:0];
-            
+            //[HelperAlert alertWithOneBtn:AlerttTitleComplete description:AlertMessageSavedScoreSuccessfully okBtn:OkButtonText withTag:0];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleComplete message:AlertMessageSavedScoreSuccessfully delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
+//            alert.tag =0;
+//            [alert show];
+            [self addRanking];
             // Dismiss the controller
             [self dismissViewControllerAnimated:YES completion:nil];
             
         } else {
             
-            [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText withTag:3];
+            [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
+//            alert.tag =3;
+//            [alert show];
         }
         
     }];
@@ -309,7 +315,6 @@
 
 
 #pragma mark - SessionContainerDelegate
-
 - (void)receivedTranscript:(Transcript *)transcript
 {
     // Add to table view data source and update on main thread
@@ -377,14 +382,21 @@
                     [kappDelegate HideIndicator];
                     if (!error) {
                         
-                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:AlertMessageSuccessfullyRankingSaved okBtn:OkButtonText withTag:1];
+                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];
+                        
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleComplete message:AlertMessageSuccessfullyRankingSaved delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
+//                        alert.tag =1;
+//                        [alert show];
                         
                         // Dismiss the controller
                         [self dismissViewControllerAnimated:YES completion:nil];
                         
                     } else {
                         
-                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText withTag:2];
+                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
+//                        alert.tag =2;
+//                        [alert show];
                         
                     }
                     
@@ -400,11 +412,17 @@
                 [gameRatingData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
                         
-                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:AlertMessageSuccessfullyRankingSaved okBtn:OkButtonText withTag:1];
+                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleComplete message:AlertMessageSuccessfullyRankingSaved delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
+//                        alert.tag =1;
+//                        [alert show];
                         
                     } else {
                         
-                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText withTag:2];
+                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];
+//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
+//                        alert.tag =2;
+//                        [alert show];
                     }
                 }];
             }
@@ -416,10 +434,10 @@
         }
     }];
 }
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == 0) {
-        [self addRanking];
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (alertView.tag == 0) {
+//        [self addRanking];
+//    }
+//}
 @end

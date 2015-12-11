@@ -65,30 +65,29 @@
 #pragma mark Button Actions
 - (IBAction)login:(id)sender {
     
-    [self.passwordTxt resignFirstResponder];
-    
-    NSString *usernameStr = [NSString stringWithFormat:@"%@",self.usernameTxt.text];
-    NSString *passwordStr = [NSString stringWithFormat:@"%@",self.passwordTxt.text];
-    
-    if (usernameStr.length == 0) {
-        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageFirstNameRequired okBtn:OkButtonText];
+    //[self.passwordTxt resignFirstResponder];
+    [self.view endEditing:YES];
+
+    if ([self.usernameTxt isEmpty]) {
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageUsernameRequired okBtn:OkButtonText];
     }
-    else if (passwordStr.length == 0)
-    {
+    else if ([self.passwordTxt isEmpty]){
         
-        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessageLastNameRequired okBtn:OkButtonText];
+        [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordRequired okBtn:OkButtonText];
     }
     else
     {
         [kappDelegate ShowIndicator];
-        [PFUser logInWithUsernameInBackground:usernameStr password:passwordStr
+        [PFUser logInWithUsernameInBackground:self.usernameTxt.text password:self.passwordTxt.text
                                         block:^(PFUser *user, NSError *error) {
                                             [kappDelegate HideIndicator];
                                             [self.view endEditing:YES];
                                             if (user) {
                                                 NSLog(@"Successful login.");
-                                                [HelperUDLib setObject:self.usernameTxt.text forKey:@"Username"];
+                                                [HelperUDLib setObject:user.username forKey:@"Username"];
                                                 scanViewController *scanVC=[[scanViewController alloc]initWithNibName:@"scanViewController" bundle:[NSBundle mainBundle]];
+                                                self.usernameTxt.text = @"";
+                                                self.passwordTxt.text = @"";
                                                 
                                                 [self.navigationController pushViewController:scanVC animated:NO];
                                             } else {

@@ -17,6 +17,7 @@
 #pragma mark All Alert Messages
 #define AlertMessageFirstNameRequired @"Please enter firstname."
 #define AlertMessageLastNameRequired @"Please enter lastname."
+#define AlertMessageEmailRequired @"Please enter email."
 #define AlertMessageUsernameRequired @"Please enter username."
 #define AlertMessagePasswordRequired @"Please enter password."
 #define AlertMessageIvalidEmail @"Invalid email/format."
@@ -24,6 +25,7 @@
 #define AlertMessagePasswordMismatch @"Password do not match."
 #define AlertMessageSavedScoreSuccessfully @"Successfully saved the game score"
 #define AlertMessageSuccessfullyRankingSaved @"Successfully saved your ranking."
+#define Alert_Message_Successfully_Ranking_and_Score_Saved @"Score and ranking saved successfully. "
 
 #pragma mark All Alert Button Text
 #define OkButtonText @"OK"
