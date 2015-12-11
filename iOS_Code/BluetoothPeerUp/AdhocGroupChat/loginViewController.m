@@ -36,6 +36,10 @@
     self.passwordBackLbl.layer.cornerRadius = 4.0;
     [self.passwordBackLbl setClipsToBounds:YES];
     
+    [self IPadDesignInatialize];
+    // Do any additional setup after loading the view from its nib.
+}
+-(void) IPadDesignInatialize{
     if (IS_IPAD) {
         self.usernameTxt.font = [UIFont systemFontOfSize:25];
         self.passwordTxt.font = [UIFont systemFontOfSize:25];
@@ -47,14 +51,13 @@
         self.imgLogo.frame = CGRectMake(125, 100, 70, 100);
         
         [self.imgUserimage setFrame:CGRectMake(self.imgUserimage.frame.origin.x+5, self.imgUserimage.frame.origin.y, self.imgUserimage.frame.size.width-3, self.imgUserimage.frame.size.height)];
-        [self.view addSubview:self.imgUserimage];
+        [self.scrollView addSubview:self.imgUserimage];
         
         [self.imgLockimage setFrame:CGRectMake(self.imgLockimage.frame.origin.x+5, self.imgLockimage.frame.origin.y, self.imgLockimage.frame.size.width-3, self.imgLockimage.frame.size.height)];
-        [self.view addSubview:self.imgLockimage];
+        [self.scrollView addSubview:self.imgLockimage];
         
         
     }
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {

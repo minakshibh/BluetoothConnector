@@ -43,19 +43,22 @@
     self.messageLbl.text = NotConnectedToAnyDevice;
     self.browseBtnLbl.text = BrowseButtontext;
     
+    [self IPadDesignInatialize];
+    // Do any additional setup after loading the view from its nib.
+}
+-(void) IPadDesignInatialize{
     if (IS_IPAD) {
         self.browseBtnLbl.font = [UIFont systemFontOfSize:34.0];
         self.logoutBtnLbl .font = [UIFont systemFontOfSize:34.0];
-        [self.searchImg setFrame:CGRectMake(self.searchImg.frame.origin.x+17, self.searchImg.frame.origin.y+2, self.searchImg.frame.size.width-5, self.searchImg.frame.size.height-2)];
+        [self.searchImg setFrame:CGRectMake(self.searchImg.frame.origin.x+13, self.searchImg.frame.origin.y+1.5, self.searchImg.frame.size.width-4, self.searchImg.frame.size.height-2)];
         [self.view addSubview:self.searchImg];
         self.messageLbl.font = [UIFont systemFontOfSize:40];
         self.hintLbl.font = [UIFont systemFontOfSize:30];
         
     }
-    // Do any additional setup after loading the view from its nib.
 }
 - (void)viewWillAppear:(BOOL)animated {
-    
+    [self IPadDesignInatialize];
     if ([msgStr isEqualToString:@"Connected"]) {
         
         
@@ -304,7 +307,7 @@
             
         } else {
             
-            [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];
+            [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];//tag=3
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
 //            alert.tag =3;
 //            [alert show];
@@ -382,7 +385,7 @@
                     [kappDelegate HideIndicator];
                     if (!error) {
                         
-                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];
+                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];//tag=1
                         
 //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleComplete message:AlertMessageSuccessfullyRankingSaved delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
 //                        alert.tag =1;
@@ -393,7 +396,7 @@
                         
                     } else {
                         
-                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];
+                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];//tag=2
 //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
 //                        alert.tag =2;
 //                        [alert show];
@@ -412,14 +415,14 @@
                 [gameRatingData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
                         
-                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];
+                        [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];//tag=1
 //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleComplete message:AlertMessageSuccessfullyRankingSaved delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
 //                        alert.tag =1;
 //                        [alert show];
                         
                     } else {
                         
-                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];
+                        [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText]; //tag=2
 //                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
 //                        alert.tag =2;
 //                        [alert show];
