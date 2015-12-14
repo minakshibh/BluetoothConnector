@@ -45,23 +45,14 @@
 #pragma mark - Textfield delegate method
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    
     NSCharacterSet *chr=[NSCharacterSet decimalDigitCharacterSet];
     NSCharacterSet *stringSet = [NSCharacterSet characterSetWithCharactersInString:string];
     NSCharacterSet *characterSet = [NSCharacterSet letterCharacterSet];
-    
-    
     NSCharacterSet *leterChar = [[NSCharacterSet characterSetWithCharactersInString:ACCEPTABLE_CHARACTERS] invertedSet];
-    
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:leterChar] componentsJoinedByString:@""];
-    
-    
-    
-    
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
-    
-    
-    if(textField.keyboardType == UIKeyboardTypeNumbersAndPunctuation)
-    {
+    if(textField.keyboardType == UIKeyboardTypeNumbersAndPunctuation){
         return (![chr isSupersetOfSet:stringSet]|| (newLength > 30) ? NO : YES );
     }
     else if (textField.tag==4545){

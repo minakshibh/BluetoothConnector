@@ -116,7 +116,12 @@
     {
         activityIndicatorObject.center = CGPointMake(207, 250);
         DisableView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 800)];
-    }else
+    }
+    else if(IS_IPAD_PRO){
+        activityIndicatorObject.center = CGPointMake(512, 683);
+        DisableView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 1366)];
+    }
+    else
     {
         activityIndicatorObject.center = CGPointMake(384, 512);
         DisableView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 768, 1024)];

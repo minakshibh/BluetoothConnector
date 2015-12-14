@@ -47,7 +47,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void) IPadDesignInatialize{
-    if (IS_IPAD) {
+    if (IS_IPAD){
         self.browseBtnLbl.font = [UIFont systemFontOfSize:34.0];
         self.logoutBtnLbl .font = [UIFont systemFontOfSize:34.0];
         [self.searchImg setFrame:CGRectMake(self.searchImg.frame.origin.x+13, self.searchImg.frame.origin.y+1.5, self.searchImg.frame.size.width-4, self.searchImg.frame.size.height-2)];
@@ -120,23 +120,28 @@
 }
 
 - (IBAction)logoutAction:(id)sender {
+    
     [PFUser logOut];
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser) {
-        return;
-    } else {
-        // Correct Approach for logout using pop action.
+//    PFUser *currentUser = [PFUser currentUser];
+//   
+//    if (currentUser) {
+//        return;
+//    } else {
+//        
+//        //NSLog(@"Navigation controllers : %@",self.navigationController.viewControllers);
+
+    // Correct Approach for logout using pop action.
         for (UIViewController *controller in self.navigationController.viewControllers) {
             
-            //Do not forget to import AnOldViewController.h
             if ([controller isKindOfClass:[loginViewController class]]) {
                 
                 [self.navigationController popToViewController:controller
                                                       animated:YES];
+                
                 break;
             }
         }
-    }
+//    }
 }
 
 #pragma mark Useful Methods
@@ -234,21 +239,15 @@
             self.hintLbl.hidden = YES;
             NSString *name = [NSString stringWithFormat:@"Connected To:%@",connectedDeviceNameStr];
             NSMutableAttributedString * string = [[NSMutableAttributedString alloc]initWithString:name];
-            
             NSArray *words=[name componentsSeparatedByString:@":"];
-            
-            
             NSString *word=[NSString stringWithFormat:@"%@:",[words objectAtIndex:0]];
             NSRange range=[name rangeOfString:word];
             [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica-Bold" size:14] range :range];
             
             [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.0f/255.0 green:0.0f/255.0 blue:0.0f/255.0 alpha:1.0] range:range];
-            
-            
+
             [self.conectivityIndicatorLbl setAttributedText:string];
-            
-            
-            
+
         }else if([msgStr isEqualToString:@"Not Connected"]){
             [self viewDidLoad];
         }
@@ -258,8 +257,7 @@
         if ([message isEqualToString:@"End Session"] || [message isEqualToString:endSessionStr]) {
             //            [_sessionContainer.advertiserAssistant stop];
             [_sessionContainer.session disconnect];
-            
-            
+
             [self viewDidLoad];
         }else if ([message isEqualToString:@"Game Selected"]){
             [self.gameSelectionView removeFromSuperview];
@@ -296,11 +294,7 @@
                 // Add the transcript to the table view data source and reload
                 [self insertTranscript:transcript];
             }
-            
-            //[HelperAlert alertWithOneBtn:AlerttTitleComplete description:AlertMessageSavedScoreSuccessfully okBtn:OkButtonText withTag:0];
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleComplete message:AlertMessageSavedScoreSuccessfully delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
-//            alert.tag =0;
-//            [alert show];
+
             [self addRanking];
             // Dismiss the controller
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -308,14 +302,11 @@
         } else {
             
             [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];//tag=3
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
-//            alert.tag =3;
-//            [alert show];
+
         }
         
     }];
 }
-
 
 #pragma mark - SessionContainerDelegate
 - (void)receivedTranscript:(Transcript *)transcript
@@ -361,6 +352,7 @@
     NSString* queryString = [NSString stringWithFormat:@"DELETE FROM gameScores"];
     [database executeUpdate:queryString];
 }
+
 -(void)addRanking
 {
     //Added Class for user defaults
@@ -387,20 +379,13 @@
                         
                         [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];//tag=1
                         
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleComplete message:AlertMessageSuccessfullyRankingSaved delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
-//                        alert.tag =1;
-//                        [alert show];
-                        
                         // Dismiss the controller
                         [self dismissViewControllerAnimated:YES completion:nil];
                         
                     } else {
                         
                         [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];//tag=2
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
-//                        alert.tag =2;
-//                        [alert show];
-                        
+
                     }
                     
                 }];
@@ -416,21 +401,15 @@
                     if (succeeded) {
                         
                         [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];//tag=1
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleComplete message:AlertMessageSuccessfullyRankingSaved delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
-//                        alert.tag =1;
-//                        [alert show];
                         
                     } else {
                         
                         [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText]; //tag=2
-//                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AlerttTitleFailure message:[error localizedDescription] delegate:self cancelButtonTitle:OkButtonText otherButtonTitles:nil];
-//                        alert.tag =2;
-//                        [alert show];
+
                     }
                 }];
             }
             
-            // The find succeeded. The first 100 objects are available in objects
         } else {
             // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);

@@ -119,8 +119,10 @@
 
 #pragma mark Button Actions
 - (IBAction)loginAction:(id)sender {
-    loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-    [self.navigationController pushViewController:loginVC animated:NO];
+//    loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+//    [self.navigationController pushViewController:loginVC animated:NO];
+    
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (IBAction)signUpAction:(id)sender {
@@ -162,6 +164,7 @@
     {
         
         [HelperAlert alertWithOneBtn:AlertTitle description:AlertMessagePasswordMismatch okBtn:OkButtonText];
+        return;
         
     }else{
         [kappDelegate ShowIndicator];
@@ -178,9 +181,11 @@
             [kappDelegate HideIndicator];
             if (!error) {
                 NSLog(@"SignUp Successful");
-                loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+//                loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+//                
+//                [self.navigationController pushViewController:loginVC animated:NO];
                 
-                [self.navigationController pushViewController:loginVC animated:NO];
+                [self.navigationController popViewControllerAnimated:NO];
                 
             } else
             {   NSString *errorString = [error userInfo][@"error"];

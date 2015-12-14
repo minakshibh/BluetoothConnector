@@ -66,8 +66,10 @@
          {
              [kappDelegate HideIndicator];
              if (!error) {
-                 loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-                 [self.navigationController pushViewController:loginVC animated:NO];
+//                 loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+//                 [self.navigationController pushViewController:loginVC animated:NO];
+                 
+                 [self.navigationController popViewControllerAnimated:NO];
                  
              }
              else{
@@ -81,9 +83,11 @@
 }
 
 - (IBAction)loginAction:(id)sender {
-    loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+//    loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
+//    
+//    [self.navigationController pushViewController:loginVC animated:NO];
     
-    [self.navigationController pushViewController:loginVC animated:NO];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 - (IBAction)registerAction:(id)sender {
     registerViewController *registerVC=[[registerViewController alloc]initWithNibName:@"registerViewController" bundle:[NSBundle mainBundle]];

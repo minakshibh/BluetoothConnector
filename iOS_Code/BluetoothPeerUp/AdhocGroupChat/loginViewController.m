@@ -40,6 +40,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void) IPadDesignInatialize{
+    
     if (IS_IPAD) {
         self.usernameTxt.font = [UIFont systemFontOfSize:25];
         self.passwordTxt.font = [UIFont systemFontOfSize:25];
@@ -55,8 +56,6 @@
         
         [self.imgLockimage setFrame:CGRectMake(self.imgLockimage.frame.origin.x+5, self.imgLockimage.frame.origin.y, self.imgLockimage.frame.size.width-3, self.imgLockimage.frame.size.height)];
         [self.scrollView addSubview:self.imgLockimage];
-        
-        
     }
 }
 
@@ -110,6 +109,7 @@
 - (IBAction)forgotPasswordAction:(id)sender {
     forgotPasswordViewController *forgotPasswordVC=[[forgotPasswordViewController alloc]initWithNibName:@"forgotPasswordViewController" bundle:[NSBundle mainBundle]];
     [self.navigationController pushViewController:forgotPasswordVC animated:NO];
+   
 }
 
 #pragma mark UITextField Delegate Methods

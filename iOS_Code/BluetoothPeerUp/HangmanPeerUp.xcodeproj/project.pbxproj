@@ -867,7 +867,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AdhocGroupChat/HangmanPeerUp-Prefix.pch";
 				INFOPLIST_FILE = "AdhocGroupChat/MultipeerGroupChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = HangmanPeerUp;
 				PROVISIONING_PROFILE = "";
@@ -891,7 +891,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AdhocGroupChat/HangmanPeerUp-Prefix.pch";
 				INFOPLIST_FILE = "AdhocGroupChat/MultipeerGroupChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = HangmanPeerUp;
 				PROVISIONING_PROFILE = "";
