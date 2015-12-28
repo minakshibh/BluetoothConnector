@@ -36,6 +36,7 @@
     self.passwordBackLbl.layer.cornerRadius = 4.0;
     [self.passwordBackLbl setClipsToBounds:YES];
     
+    
     [self IPadDesignInatialize];
     // Do any additional setup after loading the view from its nib.
 }
@@ -67,7 +68,6 @@
 #pragma mark Button Actions
 - (IBAction)login:(id)sender {
     
-    //[self.passwordTxt resignFirstResponder];
     [self.view endEditing:YES];
 
     if ([self.usernameTxt isEmpty]) {
@@ -85,18 +85,15 @@
                                             [kappDelegate HideIndicator];
                                             [self.view endEditing:YES];
                                             if (user) {
-                                                NSLog(@"Successful login.");
                                                 [HelperUDLib setObject:user.username forKey:@"Username"];
                                                 scanViewController *scanVC=[[scanViewController alloc]initWithNibName:@"scanViewController" bundle:[NSBundle mainBundle]];
                                                 self.usernameTxt.text = @"";
                                                 self.passwordTxt.text = @"";
-                                                
                                                 [self.navigationController pushViewController:scanVC animated:NO];
+                                                
                                             } else {
                                                 
                                                 [HelperAlert alertWithOneBtn:AlertTitle description:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] okBtn:OkButtonText];
-                                                
-                                                NSLog(@"The login failed. Error = %@", [error userInfo][@"error"]);
                                             }
                                         }];
     }

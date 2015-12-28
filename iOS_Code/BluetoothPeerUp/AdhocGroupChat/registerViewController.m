@@ -119,10 +119,14 @@
 
 #pragma mark Button Actions
 - (IBAction)loginAction:(id)sender {
-//    loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-//    [self.navigationController pushViewController:loginVC animated:NO];
     
-    [self.navigationController popViewControllerAnimated:NO];
+    // Pop to Particular Controller using forloop.
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[loginViewController class]]) {
+            [self.navigationController popToViewController:controller animated:NO];
+            break;
+        }
+    }
 }
 
 - (IBAction)signUpAction:(id)sender {
@@ -180,17 +184,11 @@
         [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [kappDelegate HideIndicator];
             if (!error) {
-                NSLog(@"SignUp Successful");
-//                loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-//                
-//                [self.navigationController pushViewController:loginVC animated:NO];
-                
                 [self.navigationController popViewControllerAnimated:NO];
                 
             } else
-            {   NSString *errorString = [error userInfo][@"error"];
-                NSLog(@"unable to Signup. Error = %@",errorString);
-                
+            {
+                //NSString *errorString = [error userInfo][@"error"];
                 [HelperAlert alertWithOneBtn:AlertTitle description:[NSString stringWithFormat:@"%@",[error userInfo][@"error"]] okBtn:OkButtonText];
             }
         }];

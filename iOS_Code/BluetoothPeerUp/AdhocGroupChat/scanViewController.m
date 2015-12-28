@@ -48,9 +48,9 @@
 }
 -(void) IPadDesignInatialize{
     if (IS_IPAD){
-        self.browseBtnLbl.font = [UIFont systemFontOfSize:34.0];
-        self.logoutBtnLbl .font = [UIFont systemFontOfSize:34.0];
-        [self.searchImg setFrame:CGRectMake(self.searchImg.frame.origin.x+13, self.searchImg.frame.origin.y+1.5, self.searchImg.frame.size.width-4, self.searchImg.frame.size.height-2)];
+        self.browseBtnLbl.font = [UIFont systemFontOfSize:(IS_IPAD_PRO) ? 42.0 : 34.0];
+        self.logoutBtnLbl.font = [UIFont systemFontOfSize:(IS_IPAD_PRO) ? 42.0 : 34.0];
+        [self.searchImg setFrame:CGRectMake(self.searchImg.frame.origin.x+((IS_IPAD_PRO) ? 15 : 13), self.searchImg.frame.origin.y+1.5, self.searchImg.frame.size.width-4, self.searchImg.frame.size.height-2)];
         [self.view addSubview:self.searchImg];
         self.messageLbl.font = [UIFont systemFontOfSize:40];
         self.hintLbl.font = [UIFont systemFontOfSize:30];
@@ -72,7 +72,7 @@
 
 #pragma mark Button Actions
 - (IBAction)nearByAction:(UIButton*)sender {
-    NSLog(@"%@",sender.titleLabel.text);
+   
     if ([self.browseBtnLbl.text isEqualToString:@"Browse"]) {
         self.browserViewController = [[MCBrowserViewController alloc] initWithServiceType:@"Game" session:self.sessionContainer.session];
         
@@ -92,7 +92,8 @@
         Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
         NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
         if (networkStatus == NotReachable) {
-            [self saveDataToDatabase];
+            //[self saveDataToDatabase];
+            [self saveDataToDatabaseWithSyncStatus:isSyncState_unSync];
             aTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(aTime) userInfo:nil repeats:YES];
             NSLog(@"There IS NO internet connection");
         } else {
@@ -122,14 +123,6 @@
 - (IBAction)logoutAction:(id)sender {
     
     [PFUser logOut];
-//    PFUser *currentUser = [PFUser currentUser];
-//   
-//    if (currentUser) {
-//        return;
-//    } else {
-//        
-//        //NSLog(@"Navigation controllers : %@",self.navigationController.viewControllers);
-
     // Correct Approach for logout using pop action.
         for (UIViewController *controller in self.navigationController.viewControllers) {
             
@@ -141,7 +134,7 @@
                 break;
             }
         }
-//    }
+
 }
 
 #pragma mark Useful Methods
@@ -282,6 +275,7 @@
     [gameData setObject:playername forKey:@"playerName"];
     [gameData setObject:@"1" forKey:@"gamePoint"];
     [gameData setObject:self.gamePlayed forKey:@"gamePlayed"];
+    [gameData setObject:[NSNumber numberWithInteger:isSyncState_Sync] forKey:@"isSync"];
     [kappDelegate ShowIndicator];
     // Upload recipe to Parse
     [gameData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -333,10 +327,24 @@
     
     docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     documentsDir = [docPaths objectAtIndex:0];
-    dbPath = [documentsDir   stringByAppendingPathComponent:@"hangman.sqlite"];
+    dbPath = [documentsDir stringByAppendingPathComponent:@"hangman.sqlite"];
     database = [FMDatabase databaseWithPath:dbPath];
     [database open];
     NSString *insertSQL  = [NSString stringWithFormat:@"INSERT INTO gameScores (gameTime,gamePoint,gamePlayed,playerName) VALUES ( \"%@\",1,\"%@\", \"%@\")",self.gameTime,self.gamePlayed,playername];
+    [database executeUpdate:insertSQL];
+    [database close];
+}
+
+- (void) saveDataToDatabaseWithSyncStatus:(int)syncStatus{
+    //Added Class for user defaults
+    NSString *playername = [NSString stringWithFormat:@"%@",[HelperUDLib getObject:@"Username"]];
+    
+    docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    documentsDir = [docPaths objectAtIndex:0];
+    dbPath = [documentsDir stringByAppendingPathComponent:@"hangman.sqlite"];
+    database = [FMDatabase databaseWithPath:dbPath];
+    [database open];
+    NSString *insertSQL  = [NSString stringWithFormat:@"INSERT INTO gameScores (gameTime,gamePoint,gamePlayed,playerName,isSync) VALUES ( \"%@\",1,\"%@\", \"%@\",\"%i\")",self.gameTime,self.gamePlayed,playername,syncStatus];
     [database executeUpdate:insertSQL];
     [database close];
 }
@@ -376,14 +384,12 @@
                 [gameRatingData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     [kappDelegate HideIndicator];
                     if (!error) {
-                        
                         [HelperAlert alertWithOneBtn:AlerttTitleComplete description:Alert_Message_Successfully_Ranking_and_Score_Saved okBtn:OkButtonText];//tag=1
                         
                         // Dismiss the controller
                         [self dismissViewControllerAnimated:YES completion:nil];
                         
                     } else {
-                        
                         [HelperAlert alertWithOneBtn:AlerttTitleFailure description:[error localizedDescription] okBtn:OkButtonText];//tag=2
 
                     }
@@ -416,10 +422,4 @@
         }
     }];
 }
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    if (alertView.tag == 0) {
-//        [self addRanking];
-//    }
-//}
 @end

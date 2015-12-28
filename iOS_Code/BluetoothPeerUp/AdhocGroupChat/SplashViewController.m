@@ -24,10 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (IS_IPAD) {
-        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"1~ipad"]];
-    }
-    
+
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.navigator.navigationBarHidden = YES;

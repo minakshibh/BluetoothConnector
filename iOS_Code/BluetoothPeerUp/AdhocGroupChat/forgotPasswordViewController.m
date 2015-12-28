@@ -30,7 +30,7 @@
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
     
-    if (IS_IPAD) {
+    if (IS_IPAD){
         self.lblHeadingEmail.font = [UIFont systemFontOfSize:25];
         self.emailTxt.font = [UIFont systemFontOfSize:25];
         [self.imgEmail setFrame:CGRectMake(self.imgEmail.frame.origin.x+5, self.imgEmail.frame.origin.y+1, self.imgEmail.frame.size.width-5, self.imgEmail.frame.size.height-2)];
@@ -66,9 +66,6 @@
          {
              [kappDelegate HideIndicator];
              if (!error) {
-//                 loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-//                 [self.navigationController pushViewController:loginVC animated:NO];
-                 
                  [self.navigationController popViewControllerAnimated:NO];
                  
              }
@@ -83,10 +80,6 @@
 }
 
 - (IBAction)loginAction:(id)sender {
-//    loginViewController *loginVC=[[loginViewController alloc]initWithNibName:@"loginViewController" bundle:[NSBundle mainBundle]];
-//    
-//    [self.navigationController pushViewController:loginVC animated:NO];
-    
     [self.navigationController popViewControllerAnimated:NO];
 }
 - (IBAction)registerAction:(id)sender {
