@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">HangmanPeersUp</string>
+    <string name="action_settings">Settings</string>
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="recover_password">Recover Password</string>
+    <string name="sign_up">SignUp</string>
+    <string name="browse">Browse</string>
+    <string name="logout">Logout</string>
+    <string name="clientId">iXKWARGAc8iOEfRuon8TppaXeDyZJMVZjOdwGXB8</string>
+    <string name="appId">aWzlBXzi72l7TVhqh1Y4uLzlMXdZGJUVnCtfL9OY</string>
+    <string name="register_text">Register Now</string>
+    <string name="common_text">|</string>
+    <string name="forget_text">Forgot Password ?</string>
+    <string name="not_connected">You are currently not connected to</string>
+    <string name="not_connected1"> any device.</string>
+    <string name="browse_device">Click on Browse button to see avaiable device</string>
+</resources>
