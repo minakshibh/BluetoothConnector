@@ -75,11 +75,9 @@
    
     if ([self.browseBtnLbl.text isEqualToString:@"Browse"]) {
         self.browserViewController = [[MCBrowserViewController alloc] initWithServiceType:@"Game" session:self.sessionContainer.session];
-        
         self.browserViewController.delegate = self;
         self.browserViewController.minimumNumberOfPeers = kMCSessionMinimumNumberOfPeers;
         self.browserViewController.maximumNumberOfPeers = kMCSessionMaximumNumberOfPeers;
-        
         [self presentViewController:self.browserViewController animated:YES completion:nil];
     }else{
         NSDate *date = [NSDate date];
@@ -92,12 +90,12 @@
         Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
         NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
         if (networkStatus == NotReachable) {
-            //[self saveDataToDatabase];
-            [self saveDataToDatabaseWithSyncStatus:isSyncState_unSync];
-            aTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(aTime) userInfo:nil repeats:YES];
+            [self saveDataToDatabase];
+            
             NSLog(@"There IS NO internet connection");
         } else {
             NSLog(@"There IS internet connection");
+           [self aTime];
             [self saveData];
             
         }
@@ -143,14 +141,16 @@
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable) {
+        [self saveDataToDatabase];
         return;
     }else{
-        PFObject *gameData = [PFObject objectWithClassName:@"gameScores"];
+        
         docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         documentsDir = [docPaths objectAtIndex:0];
         dbPath = [documentsDir   stringByAppendingPathComponent:@"hangman.sqlite"];
         database = [FMDatabase databaseWithPath:dbPath];
         [database open];
+        NSMutableArray *array = [NSMutableArray array];
         NSString *queryString = [NSString stringWithFormat:@"Select * FROM gameScores "];
         FMResultSet *results = [database executeQuery:queryString];
         while ([results next]) {
@@ -158,12 +158,13 @@
             NSString *gameTime = [results stringForColumn:@"gameTime"];
             NSString *gamePoint = [results stringForColumn:@"gamePoint"];
             NSString *gamePlayed = [results stringForColumn:@"gamePlayed"];
-            
+            NSLog(@"playerName : %@ , gameTime : %@ , gamePoint : %@ , gamePlayed : %@",playerName,gameTime,gamePoint,gamePlayed);
+            PFObject *gameData = [PFObject objectWithClassName:@"gameScores"];
             [gameData setObject:gameTime forKey:@"gameTime"];
             [gameData setObject:playerName forKey:@"playerName"];
             [gameData setObject:gamePoint forKey:@"gamePoint"];
             [gameData setObject:gamePlayed forKey:@"gamePlayed"];
-            [gameData save];
+            [gameData saveInBackground];
         }
         [self deleteDataFromDatabase];
         [aTimer invalidate];
@@ -275,7 +276,6 @@
     [gameData setObject:playername forKey:@"playerName"];
     [gameData setObject:@"1" forKey:@"gamePoint"];
     [gameData setObject:self.gamePlayed forKey:@"gamePlayed"];
-    [gameData setObject:[NSNumber numberWithInteger:isSyncState_Sync] forKey:@"isSync"];
     [kappDelegate ShowIndicator];
     // Upload recipe to Parse
     [gameData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -333,20 +333,16 @@
     NSString *insertSQL  = [NSString stringWithFormat:@"INSERT INTO gameScores (gameTime,gamePoint,gamePlayed,playerName) VALUES ( \"%@\",1,\"%@\", \"%@\")",self.gameTime,self.gamePlayed,playername];
     [database executeUpdate:insertSQL];
     [database close];
-}
-
-- (void) saveDataToDatabaseWithSyncStatus:(int)syncStatus{
-    //Added Class for user defaults
-    NSString *playername = [NSString stringWithFormat:@"%@",[HelperUDLib getObject:@"Username"]];
     
-    docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    documentsDir = [docPaths objectAtIndex:0];
-    dbPath = [documentsDir stringByAppendingPathComponent:@"hangman.sqlite"];
-    database = [FMDatabase databaseWithPath:dbPath];
-    [database open];
-    NSString *insertSQL  = [NSString stringWithFormat:@"INSERT INTO gameScores (gameTime,gamePoint,gamePlayed,playerName,isSync) VALUES ( \"%@\",1,\"%@\", \"%@\",\"%i\")",self.gameTime,self.gamePlayed,playername,syncStatus];
-    [database executeUpdate:insertSQL];
-    [database close];
+    Transcript *transcript = [self.sessionContainer sendMessage:@"End Session"];
+    
+    if (transcript) {
+        // Add the transcript to the table view data source and reload
+        [self insertTranscript:transcript];
+    }
+    
+    // Dismiss the controller
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void) deleteDataFromDatabase
