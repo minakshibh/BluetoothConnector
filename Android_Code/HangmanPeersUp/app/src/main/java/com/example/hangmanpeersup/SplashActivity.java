@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 
+import com.example.hangmanpeersup.bluetoothchat.BluetoothChatFragment;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
 
@@ -27,21 +28,21 @@ public class SplashActivity extends Activity {
 
                 // Determine whether the current user is an anonymous user
                 if (ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
-               // If user is anonymous, send the user to LoginSignupActivity.class
+                    // If user is anonymous, send the user to LoginSignupActivity.class
                     i = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(i);
                     finish();
                 } else {
-                  // If current user is NOT anonymous user
-                  // Get current user data from Parse.com
+                    // If current user is NOT anonymous user
+                    // Get current user data from Parse.com
                     ParseUser currentUser = ParseUser.getCurrentUser();
                     if (currentUser != null) {
-                   // Send logged in users to Welcome.class
-                        i = new Intent(SplashActivity.this, LoginActivity.class);
+                        // Send logged in users to Welcome.class
+                        i = new Intent(SplashActivity.this, BluetoothChatFragment.class);
                         startActivity(i);
                         finish();
                     } else {
-                  // Send user to LoginSignupActivity.class
+                        // Send user to LoginSignupActivity.class
                         i = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(i);
                         finish();

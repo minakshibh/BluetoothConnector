@@ -7,21 +7,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
 
-/**
- * Device list.
- *
- * @author Lorensius W. L. T <lorenz@londatiga.net>
- */
+
 public class DeviceListActivity extends Activity {
-    private ListView mListView;
+    private ListView mListView, mListView1;
     private DeviceListAdapter mAdapter;
+    private PairedDeviceListAdapter mAdapteList;
     private ArrayList<BluetoothDevice> mDeviceList;
+    private ArrayList<BluetoothDevice> mDeviceList1;
+    private Intent i;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,25 +33,75 @@ public class DeviceListActivity extends Activity {
         setContentView(R.layout.activity_paired_devices);
 
         mDeviceList = getIntent().getExtras().getParcelableArrayList("device.list");
+        mDeviceList1 = getIntent().getExtras().getParcelableArrayList("device.list1");
         mListView = (ListView) findViewById(R.id.lv_paired);
+        mListView1 = (ListView) findViewById(R.id.lv_unpaired);
         mAdapter = new DeviceListAdapter(this);
-        mAdapter.setData(mDeviceList);
-        mAdapter.setListener(new DeviceListAdapter.OnPairButtonClickListener() {
+        mAdapteList = new PairedDeviceListAdapter(this);
+        mListView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onPairButtonClick(int position) {
-                BluetoothDevice device = mDeviceList.get(position);
-
-                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-                    unpairDevice(device);
-                } else {
-                    showToast("Pairing...");
-
-                    pairDevice(device);
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                i = new Intent(DeviceListActivity.this, SelectedGameActivity.class);
+                i.putExtra("DeviceName", mDeviceList1.get(position).getName());
+                startActivity(i);
             }
         });
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BluetoothDevice device = mDeviceList.get(position);
+
+//                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+//                    unpairDevice(device);
+//                } else {
+//                    showToast("Pairing...");
+//                    pairDevice(device);
+//                }
+                String paired = pairDevice(device);
+                if (paired.equalsIgnoreCase("1")){
+                    i = new Intent(DeviceListActivity.this, SelectedGameActivity.class);
+                    i.putExtra("DeviceName", mDeviceList1.get(position).getName());
+                    startActivity(i);
+
+                }else{ }
+            }
+        });
+
+// add elements to al, including duplicates
+        HashSet hs = new HashSet();
+        hs.addAll(mDeviceList);
+        mDeviceList.clear();
+        mDeviceList.addAll(hs);
+        for (int i = 0; i < mDeviceList.size(); i++) {
+            System.out.println(mDeviceList.get(i).getAddress());
+        }
+        List newList = new ArrayList(new LinkedHashSet(
+                mDeviceList));
+        Iterator it = newList.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+            //mDeviceList1.
+        }
+        //mAdapter.setData(mDeviceList);
+        mAdapteList.setData(mDeviceList1);
+//        mAdapter.setListener(new DeviceListAdapter.OnPairButtonClickListener() {
+//            @Override
+//            public void onPairButtonClick(int position) {
+//                BluetoothDevice device = mDeviceList.get(position);
+//
+//                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+//                    unpairDevice(device);
+//                } else {
+//                    showToast("Pairing...");
+//
+//                    pairDevice(device);
+//                }
+//            }
+//        });
+
         mListView.setAdapter(mAdapter);
+        mListView1.setAdapter(mAdapteList);
         registerReceiver(mPairReceiver, new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED));
     }
 
@@ -60,16 +114,17 @@ public class DeviceListActivity extends Activity {
 
 
     private void showToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void pairDevice(BluetoothDevice device) {
+    private String pairDevice(BluetoothDevice device) {
         try {
             Method method = device.getClass().getMethod("createBond", (Class[]) null);
             method.invoke(device, (Object[]) null);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return "1";
     }
 
     private void unpairDevice(BluetoothDevice device) {
@@ -91,9 +146,9 @@ public class DeviceListActivity extends Activity {
                 final int prevState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
 
                 if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
-                    showToast("Paired");
+                    //showToast("Paired");
                 } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED) {
-                    showToast("Unpaired");
+                    //showToast("Unpaired");
                 }
 
                 mAdapter.notifyDataSetChanged();

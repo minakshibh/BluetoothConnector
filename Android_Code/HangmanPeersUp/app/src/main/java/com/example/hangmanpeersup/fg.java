@@ -9,46 +9,55 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.parse.LogOutCallback;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 
-public class fg extends Activity {
-    private TextView mStatusTv;
-    private Button mActivateBtn;
-    private Button mPairedBtn,btn_scan;
+public class fg extends Activity implements View.OnClickListener {
+
     private RelativeLayout browseTxtLayout;
-
     private ProgressDialog mProgressDlg;
-
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
-
     private BluetoothAdapter mBluetoothAdapter;
+    private RelativeLayout logoutLayout;
+    private Intent i;
+    /**
+     * Tag for Log
+     */
+    private static final String TAG = "DeviceListActivity";
+
+    /**
+     * Return Intent extra
+     */
+    public static String EXTRA_DEVICE_ADDRESS = "device_address";
+
+    /**
+     * Member fields
+     */
+    private BluetoothAdapter mBtAdapter;
+
+    /**
+     * Newly discovered devices
+     */
+    private ArrayAdapter<String> mNewDevicesArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.ff);
-
-        mStatusTv = (TextView) findViewById(R.id.tv_status);
-        mActivateBtn = (Button) findViewById(R.id.btn_enable);
-        mPairedBtn = (Button) findViewById(R.id.btn_view_paired);
-        btn_scan =  (Button) findViewById(R.id.btn_scan);
-        //browseTxtLayout = (RelativeLayout) findViewById(R.id.browseTxtLayout);
-
+        setContentView(R.layout.activity_bluetooth);
+        browseTxtLayout = (RelativeLayout) findViewById(R.id.browseTxtLayout);
+        logoutLayout = (RelativeLayout) findViewById(R.id.logoutLayout);
+        logoutLayout.setOnClickListener(this);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
         mProgressDlg = new ProgressDialog(this);
-
         mProgressDlg.setMessage("Scanning...");
         mProgressDlg.setCancelable(false);
         mProgressDlg.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
@@ -61,56 +70,16 @@ public class fg extends Activity {
         });
 
         if (mBluetoothAdapter == null) {
-            showUnsupported();
         } else {
-            mPairedBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
-                    if (pairedDevices == null || pairedDevices.size() == 0) {
-                        showToast("No Paired Devices Found");
-                    } else {
-                        ArrayList<BluetoothDevice> list = new ArrayList<BluetoothDevice>();
-
-                        list.addAll(pairedDevices);
-
-                        Intent intent = new Intent(fg.this, DeviceListActivity.class);
-
-                        intent.putParcelableArrayListExtra("device.list", list);
-
-                        startActivity(intent);
-                    }
-                }
-            });
-
-            btn_scan.setOnClickListener(new View.OnClickListener() {
+            browseTxtLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    mBluetoothAdapter.startDiscovery();
+                    doDiscovery();
                 }
+
             });
 
-            mActivateBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mBluetoothAdapter.isEnabled()) {
-                        mBluetoothAdapter.disable();
 
-                        showDisabled();
-                    } else {
-                        Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-
-                        startActivityForResult(intent, 1000);
-                    }
-                }
-            });
-
-            if (mBluetoothAdapter.isEnabled()) {
-                showEnabled();
-            } else {
-                showDisabled();
-            }
         }
 
         IntentFilter filter = new IntentFilter();
@@ -121,6 +90,28 @@ public class fg extends Activity {
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 
         registerReceiver(mReceiver, filter);
+    }
+
+    /**
+     * Start device discover with the BluetoothAdapter
+     */
+    private void doDiscovery() {
+        Log.d(TAG, "doDiscovery()");
+
+        // Indicate scanning in the title
+        setProgressBarIndeterminateVisibility(true);
+        setTitle(R.string.scanning);
+
+        // Turn on sub-title for new devices
+        // findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
+
+        // If we're already discovering, stop it
+        if (mBtAdapter.isDiscovering()) {
+            mBtAdapter.cancelDiscovery();
+        }
+
+        // Request discover from BluetoothAdapter
+        mBtAdapter.startDiscovery();
     }
 
     @Override
@@ -141,41 +132,6 @@ public class fg extends Activity {
         super.onDestroy();
     }
 
-    private void showEnabled() {
-        mStatusTv.setText("Bluetooth is On");
-        mStatusTv.setTextColor(Color.BLUE);
-
-        mActivateBtn.setText("Disable");
-        mActivateBtn.setEnabled(true);
-
-        mPairedBtn.setEnabled(true);
-        btn_scan.setEnabled(true);
-    }
-
-    private void showDisabled() {
-        mStatusTv.setText("Bluetooth is Off");
-        mStatusTv.setTextColor(Color.RED);
-
-        mActivateBtn.setText("Enable");
-        mActivateBtn.setEnabled(true);
-
-        mPairedBtn.setEnabled(false);
-        btn_scan.setEnabled(false);
-    }
-
-    private void showUnsupported() {
-        mStatusTv.setText("Bluetooth is unsupported by this device");
-
-        mActivateBtn.setText("Enable");
-        mActivateBtn.setEnabled(false);
-
-        mPairedBtn.setEnabled(false);
-        btn_scan.setEnabled(false);
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -185,9 +141,7 @@ public class fg extends Activity {
                 final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
 
                 if (state == BluetoothAdapter.STATE_ON) {
-                    showToast("Enabled");
 
-                    showEnabled();
                 }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 mDeviceList = new ArrayList<BluetoothDevice>();
@@ -195,9 +149,11 @@ public class fg extends Activity {
                 mProgressDlg.show();
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 mProgressDlg.dismiss();
-
+                Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+                ArrayList<BluetoothDevice> list = new ArrayList<BluetoothDevice>();
+                list.addAll(pairedDevices);
                 Intent newIntent = new Intent(fg.this, DeviceListActivity.class);
-
+                newIntent.putParcelableArrayListExtra("device.list1", list);
                 newIntent.putParcelableArrayListExtra("device.list", mDeviceList);
 
                 startActivity(newIntent);
@@ -206,9 +162,36 @@ public class fg extends Activity {
 
                 mDeviceList.add(device);
 
-                showToast("Found device " + device.getName());
+
             }
         }
     };
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.logoutLayout:
+                ParseUser.logOutInBackground(new LogOutCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e == null) {
+                            logOutFun();
+                        } else {
+
+                        }
+                    }
+
+
+                });
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void logOutFun() {
+        i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+    }
 }

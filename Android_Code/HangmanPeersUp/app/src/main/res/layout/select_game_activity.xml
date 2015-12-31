@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_ground"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/SelectGameTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/select_game"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:id="@+id/FirstGameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/SelectGameTxt"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/default_back_color">
+
+            <ImageView
+                android:id="@+id/HangmanImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:clickable="false"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/imageviewtwo" />
+
+            <TextView
+                android:id="@+id/HangeManTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="15dp"
+                android:clickable="false"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@+id/HangmanImageView"
+                android:text="@string/hangeman_txt"
+                android:textColor="@color/black_color"
+                android:textSize="18sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:clickable="false"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/arrow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/SecondGameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/FirstGameLayout"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/default_back_color">
+
+            <ImageView
+                android:id="@+id/BattleShipImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:clickable="false"
+                android:src="@drawable/imageviewone" />
+
+            <TextView
+                android:id="@+id/battleShipTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:clickable="false"
+                android:layout_toRightOf="@+id/BattleShipImageView"
+                android:text="@string/battleship_txt"
+                android:textColor="@color/black_color"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="8dp"
+                android:clickable="false"
+                android:background="@drawable/arrow" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

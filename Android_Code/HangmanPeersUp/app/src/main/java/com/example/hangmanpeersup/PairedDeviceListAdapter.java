@@ -8,19 +8,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class DeviceListAdapter extends BaseAdapter {
+public class PairedDeviceListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<BluetoothDevice> mData;
     private OnPairButtonClickListener mListener;
-    private ArrayList<String> mDeviceListArrayList;
-    public DeviceListAdapter(Context context) {
+
+    public PairedDeviceListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
-
 
     public void setData(List<BluetoothDevice> data) {
         mData = data;
@@ -52,7 +50,7 @@ public class DeviceListAdapter extends BaseAdapter {
 
             holder.nameTv = (TextView) convertView.findViewById(R.id.tv_name);
             holder.addressTv = (TextView) convertView.findViewById(R.id.tv_address);
-
+            //holder.pairBtn = (Button) convertView.findViewById(R.id.btn_pair);
 
             convertView.setTag(holder);
         } else {
@@ -63,7 +61,15 @@ public class DeviceListAdapter extends BaseAdapter {
 
         holder.nameTv.setText(device.getName());
         holder.addressTv.setText(device.getAddress());
-        System.out.print("heiiiiiiiiii+++"+device.getAddress());
+//        holder.pairBtn.setText((device.getBondState() == BluetoothDevice.BOND_BONDED) ? "Unpair" : "Pair");
+//        holder.pairBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mListener != null) {
+//                    mListener.onPairButtonClick(position);
+//                }
+//            }
+//        });
 
         return convertView;
     }

@@ -28,8 +28,11 @@
         <activity android:name=".BluetoothActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".fg"></activity>
-        <activity android:name=".DeviceListActivity"></activity>
+        <activity android:name="com.example.hangmanpeersup.bluetoothchat.BluetoothChatFragment"></activity>
+        <activity android:name="com.example.hangmanpeersup.bluetoothchat.DeviceListActivity"></activity>
+        <activity android:name=".SelectedGameActivity"></activity>
         <activity android:name=".ForgetpasswordActivity"></activity>
+        <activity android:name="com.example.hangmanpeersup.bluetoothchat.GameProgressActivity"></activity>
     </application>
 
 </manifest>
