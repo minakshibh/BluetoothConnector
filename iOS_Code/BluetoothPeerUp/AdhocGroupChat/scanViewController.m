@@ -43,14 +43,14 @@
     self.messageLbl.text = NotConnectedToAnyDevice;
     self.browseBtnLbl.text = BrowseButtontext;
     
-    [self IPadDesignInatialize];
+    //[self IPadDesignInatialize];
     // Do any additional setup after loading the view from its nib.
 }
 -(void) IPadDesignInatialize{
     if (IS_IPAD){
-        self.browseBtnLbl.font = [UIFont systemFontOfSize:(IS_IPAD_PRO) ? 42.0 : 34.0];
-        self.logoutBtnLbl.font = [UIFont systemFontOfSize:(IS_IPAD_PRO) ? 42.0 : 34.0];
-        [self.searchImg setFrame:CGRectMake(self.searchImg.frame.origin.x+((IS_IPAD_PRO) ? 15 : 13), self.searchImg.frame.origin.y+1.5, self.searchImg.frame.size.width-4, self.searchImg.frame.size.height-2)];
+        self.browseBtnLbl.font = [UIFont systemFontOfSize:(IS_IPAD_PRO) ? 45.0 : 36.0];
+        self.logoutBtnLbl.font = [UIFont systemFontOfSize:(IS_IPAD_PRO) ? 45.0 : 36.0];
+        [self.searchImg setFrame:CGRectMake(self.searchImg.frame.origin.x+((IS_IPAD_PRO) ? 50 : 35), self.searchImg.frame.origin.y+1.5, self.searchImg.frame.size.width-8, self.searchImg.frame.size.height-4)];
         [self.view addSubview:self.searchImg];
         self.messageLbl.font = [UIFont systemFontOfSize:40];
         self.hintLbl.font = [UIFont systemFontOfSize:30];
